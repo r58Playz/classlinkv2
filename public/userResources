@@ -1,0 +1,21 @@
+/// classlinkJumpScript.js
+window.addEventListener("DOMContentLoaded", ()=>{
+  const h = window.location.hostname;
+  const p = window.location.pathname;
+  const s = new URLSearchParams(window.location.search);
+  const r = ()=>{const d = document;d.open();d.write("");d.close()};
+  if(h === "classlink.r58playz.dev" || h === "localhost") {
+    window.jumpScriptInstalled = "e"; // or any truthy value
+  } else if (h === "myapps.classlink.com" && p.includes("oauth") && s.get("code")) {
+    // Intercept login
+    if(s.get("bypass")) {/* Allow Classlinkv2 to redirect to actual Classlink if needed? */ return;}
+    r();
+    //window.location="https://classlink.r58playz.dev/api/login/stage2?code="+s.get("code");
+    window.location="http://localhost:3000/api/login/stage2?code="+s.get("code")
+  } else if (h.includes("classlink.com") && s.get("clFAction")) {
+    // Allow Classlinkv2 to send actions that require cookies to a helper page on the Classlink domains
+    r();
+    const a = s.get("clFAction");
+    alert(a);
+  }
+});

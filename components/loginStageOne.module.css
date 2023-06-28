@@ -1,0 +1,45 @@
+.container {
+  background-color: var(--login-ui-bg);
+  padding: 2em;
+  border-radius: 1em;
+  min-height: 60vh;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.scriptStatus {
+  font-weight: bold;
+}
+
+.notInstalled {
+  color: var(--login-script-notinstalled);
+}
+
+.installed {
+  color: var(--login-script-installed);
+}
+
+.inlineCode {
+    background-color: var(--inline-code-bg-color);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.tile {
+  background-color: var(--inline-code-bg-color);
+  padding: 0.5em;
+  display: inline-block;
+  margin: 0.25em;
+  border-radius: 8px;
+}
