@@ -3,5 +3,6 @@
   margin: auto;
   color: var(--fg-color);
   font-family: "Roboto Mono", monospace;
-  padding-top: 1em;
+  padding: 1em;
+  margin-bottom: 2em;
 }

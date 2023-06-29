@@ -2,13 +2,13 @@
   background-color: var(--login-ui-bg);
   padding: 2em;
   border-radius: 1em;
-  min-height: 60vh;
 }
 
 .header {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
+  margin-bottom: 0.5em;
 }
 
 .scriptStatus {
@@ -23,13 +23,8 @@
   color: var(--login-script-installed);
 }
 
-.inlineCode {
-    background-color: var(--inline-code-bg-color);
-    padding-left: 0.5em;
-    padding-right: 0.5em;
-    border-radius: 4px;
-    white-space: pre-wrap;
-    overflow-wrap: break-word;
+.detecting {
+  color: var(--note-fg);
 }
 
 .bold {
@@ -42,4 +37,37 @@
   display: inline-block;
   margin: 0.25em;
   border-radius: 8px;
+}
+
+.saveRedirect {
+  padding: 1em;
+  background-color: var(--save-redirect-bg);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+}
+
+.saveRedirect > input {
+  color: var(--fg-color);
+  background-color: var(--save-redirect-input-bg);
+  border: none;
+  height: 3em;
+  margin-right: 1em;
+  flex-grow: 1;
+  padding-left: 1em;
+  border-radius: 8px;
+  font-family: var(--font);
+}
+
+.saveRedirect > input::placeholder {
+  color: var(--fg-color);
+}
+
+.saveRedirect > button {
+  background-color: var(--save-redirect-input-bg);
+  border: none;
+  color: var(--fg-color);
+  font-family: var(--font);
+  border-radius: 8px;
+  padding: 0 1em;
 }

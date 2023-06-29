@@ -1,0 +1,8 @@
+.inlineCode {
+  background-color: var(--inline-code-bg-color);
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}

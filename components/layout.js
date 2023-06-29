@@ -3,9 +3,9 @@ import Head from 'next/head';
 import ThemeButton from './themes.js';
 import styles from './layout.module.css';
 
-const robotoMono = Roboto_Mono({ subsets: ["latin"] });
+const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: "font" });
 
-const siteTitle = "Classlink Frontend";
+const siteTitle = "Classlinkv2";
 
 export default function Layout({ title, children }) {
   const t = `${(title ? title + " |" : "")} ${siteTitle}`

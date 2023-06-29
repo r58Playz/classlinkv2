@@ -1,9 +1,6 @@
+import { useState, useEffect, useRef } from 'react';
 import styles from './loginStageOne.module.css';
-import { useState, useEffect } from 'react';
-
-function CB({ children }) {
-  return <span className={styles.inlineCode} children={children}></span>
-}
+import { CB } from './utils.js';
 
 function JumpScriptInstructions() {
   let [showInstructions, setShowInstructions] = useState(false);
@@ -61,7 +58,23 @@ function JumpScriptInstructions() {
   )
 }
 
+function DetectingUI() {
+  return (
+    <div><div className={styles.scriptStatus}>Jump script status: <span className={styles.detecting}>detecting</span></div></div>
+  )
+}
+
 function RedirectUI() {
+  const ref=useRef(null);
+  const [saveText, setSaveText] = useState("Save");
+  const setRedirectUri = ()=>{
+    localStorage.setItem("redirectUri", ref.current.value);
+    setSaveText("Saved!");
+  }
+
+  useEffect(()=>{
+    if(saveText === "Saved!") setTimeout(()=>{setSaveText("Save")}, 1000);
+  })
   return (
     <div>
       <div className={styles.scriptStatus}>Jump script status: <span className={styles.installed}>detected</span></div>
@@ -69,21 +82,36 @@ function RedirectUI() {
         When you're ready, open your Classlink portal and log in. If you have installed the jump script correctly, you should be redirected to this website, logged in.
       </p>
       <p className={styles.bold}>It is safe to close this tab now.</p>
+      <p>
+        If you want, you can also automatically redirect to your Classlink login page once the jump script is detected. This can be cleared by clearing site data for this site in your browser settings, or by clicking the <CB>Remove redirect</CB> button once you are logged in.
+        The redirect URL is stored client side and not sent to any servers.
+      </p>
+      <div className={styles.saveRedirect}><input placeholder="Redirect URL" type="text" autoCorrect="off" autoComplete="off" ref={ref} /><button onClick={setRedirectUri}>{saveText}</button></div>
     </div>
   )
 }
 
 export default function LoginStage1() {
-  let [hasJumpScript, setHasJumpScript] = useState(false);
+  let [hasJumpScript, setHasJumpScript] = useState("detecting");
 
   useEffect(()=>{
-    setHasJumpScript(!!window.jumpScriptInstalled);
+    const r = localStorage.getItem("redirectUri")
+    if(r && !!window.jumpScriptInstalled) {window.location=r} 
+    setHasJumpScript(!!window.jumpScriptInstalled ? "yes" : "no");
   });
+
+  let Component = DetectingUI;
+  if(hasJumpScript === "yes") {
+    Component = RedirectUI;
+  } else if(hasJumpScript === "no") {
+    Component = JumpScriptInstructions;
+  }
+  
 
   return (
     <div className={styles.container}>
       <div className={styles.header}>Log In</div>
-      { hasJumpScript ? <RedirectUI /> : <JumpScriptInstructions /> }
+      <Component />
     </div>
   )
 }

@@ -8,6 +8,12 @@
   --login-script-installed: var(--ctp-latte-green);
   --theme-cycler-bg-color: var(--ctp-latte-crust);
   --inline-code-bg-color: var(--ctp-latte-crust);
+  --app-view-bg: var(--ctp-latte-mantle);
+  --app-bg: var(--ctp-latte-crust);
+  --app-button: var(--ctp-latte-base);
+  --note-fg: var(--ctp-latte-yellow);
+  --save-redirect-bg: var(--ctp-latte-crust);
+  --save-redirect-input-bg: var(--ctp-latte-base);
 }
 
 [data-theme='frappe'] {
@@ -19,6 +25,12 @@
   --login-script-installed: var(--ctp-frappe-green);
   --theme-cycler-bg-color: var(--ctp-frappe-crust);
   --inline-code-bg-color: var(--ctp-frappe-crust);
+  --app-view-bg: var(--ctp-frappe-mantle);
+  --app-bg: var(--ctp-frappe-crust);
+  --app-button: var(--ctp-frappe-base);
+  --note-fg: var(--ctp-frappe-yellow);
+  --save-redirect-bg: var(--ctp-frappe-crust);
+  --save-redirect-input-bg: var(--ctp-frappe-base);
 }
 
 [data-theme='macchiato'] {
@@ -30,6 +42,12 @@
   --login-script-installed: var(--ctp-macchiato-green);
   --theme-cycler-bg-color: var(--ctp-macchiato-crust);
   --inline-code-bg-color: var(--ctp-macchiato-crust);
+  --app-view-bg: var(--ctp-macchiato-mantle);
+  --app-bg: var(--ctp-macchiato-crust);
+  --app-button: var(--ctp-macchiato-base);
+  --note-fg: var(--ctp-macchiato-yellow);
+  --save-redirect-bg: var(--ctp-macchiato-crust);
+  --save-redirect-input-bg: var(--ctp-macchiato-base);
 }
 
 [data-theme='mocha'] {
@@ -41,6 +59,12 @@
   --login-script-installed: var(--ctp-mocha-green);
   --theme-cycler-bg-color: var(--ctp-mocha-crust);
   --inline-code-bg-color: var(--ctp-mocha-crust);
+  --app-view-bg: var(--ctp-mocha-mantle);
+  --app-bg: var(--ctp-mocha-crust);
+  --app-button: var(--ctp-mocha-base);
+  --note-fg: var(--ctp-mocha-yellow);
+  --save-redirect-bg: var(--ctp-mocha-crust);
+  --save-redirect-input-bg: var(--ctp-mocha-base);
 }
 
 * {
@@ -64,5 +88,10 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+hr {
+  border: none;
+  border-bottom: 1px solid var(--fg-color);
 }
 
