@@ -11,7 +11,7 @@ gist of how to launch an app:
 
 
 type reference:
- - 30: apps with some sort of classlink-sso api endpoint, open `url[0]`
- - 31: apps that use `idp.classlink.com`, open `url[0]`
- - 16: `https://launchpad.classlink.com/ltisso/<id>`
- - 15: `https://launchpad.classlink.com/browsersso/<id>`
+ - `30`: apps with some sort of classlink-sso api endpoint, open `url[0]`
+ - `31`: apps that use `idp.classlink.com`, open `url[0]`
+ - `16`: `https://launchpad.classlink.com/ltisso/<id>`
+ - `15`: `https://launchpad.classlink.com/browsersso/<id>` - requires classlink sso extension
