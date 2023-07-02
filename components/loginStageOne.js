@@ -19,6 +19,8 @@ function JumpScriptInstructions() {
 
   return (
     <div>
+      <p>Currently you need to install a userscript (known as the "jump script") that intercepts the login process. There's no way to log into ClassLink with an alternate frontend without this, at least that I know of.</p>
+      <hr />
       <div className={styles.scriptStatus}>Jump script status: <span className={styles.notInstalled}>not detected</span></div>
       <p>
         Please install the jump script with either uBlock Origin or your favorite userscript manager.
@@ -81,12 +83,11 @@ function RedirectUI() {
       <p>
         When you're ready, open your Classlink portal and log in. If you have installed the jump script correctly, you should be redirected to this website, logged in.
       </p>
-      <p className={styles.bold}>It is safe to close this tab now.</p>
       <p>
-        If you want, you can also automatically redirect to your Classlink login page once the jump script is detected. This can be cleared by clearing site data for this site in your browser settings, or by clicking the <CB>Remove redirect</CB> button once you are logged in.
-        The redirect URL is stored client side and not sent to any servers.
+        If you want, you can also automatically redirect to your Classlink login page once the jump script is detected. This can be cleared by clearing site data for this site in your browser settings, or by clicking the <CB>Remove redirect</CB> button once you are logged in. The redirect URL is stored client side and not sent to any servers.
       </p>
       <div className={styles.saveRedirect}><input placeholder="Redirect URL" type="text" autoCorrect="off" autoComplete="off" ref={ref} /><button onClick={setRedirectUri}>{saveText}</button></div>
+      <p className={styles.bold}>It is safe to close this tab now.</p>
     </div>
   )
 }
