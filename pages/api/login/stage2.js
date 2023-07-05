@@ -6,6 +6,7 @@ export default async function handler(req, res) {
     if(!resp.token) throw new Error("classlink server refused femboy request :( : "+JSON.stringify(resp)) 
     data.cookies.cookies.set("cl-token", resp.token)
     data.cookies.cookies.set("cl-code", data.queryString.code)
+    data.cookies.cookies.set("cl-gws", resp.gwsToken)
     res.redirect(307, '/dashboard');
   });
 }
