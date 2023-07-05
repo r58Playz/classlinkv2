@@ -96,6 +96,7 @@
 }
 
 .appView {
+  margin-top: 1em;
   background-color: var(--app-view-bg);
   padding: 1em;
   border-radius: 16px;
