@@ -1,74 +1,21 @@
-/* [data-theme="latte"] */
 :root {
-  --bg-color: var(--ctp-latte-base);
-  --fg-color: var(--ctp-latte-text);
-  --link-color: var(--ctp-latte-blue);
-  --login-ui-bg: var(--ctp-latte-mantle);
-  --login-script-notinstalled: var(--ctp-latte-red);
-  --login-script-installed: var(--ctp-latte-green);
-  --theme-cycler-bg-color: var(--ctp-latte-crust);
-  --inline-code-bg-color: var(--ctp-latte-crust);
-  --app-view-bg: var(--ctp-latte-mantle);
-  --app-bg: var(--ctp-latte-crust);
-  --app-button: var(--ctp-latte-base);
-  --note-fg: var(--ctp-latte-yellow);
-  --save-redirect-bg: var(--ctp-latte-crust);
-  --save-redirect-input-bg: var(--ctp-latte-base);
-  --footer-color: var(--ctp-latte-mantle);
-}
-
-[data-theme='frappe'] {
-  --bg-color: var(--ctp-frappe-base);
-  --fg-color: var(--ctp-frappe-text);
-  --link-color: var(--ctp-frappe-blue);
-  --login-ui-bg: var(--ctp-frappe-mantle);
-  --login-script-notinstalled: var(--ctp-frappe-red);
-  --login-script-installed: var(--ctp-frappe-green);
-  --theme-cycler-bg-color: var(--ctp-frappe-crust);
-  --inline-code-bg-color: var(--ctp-frappe-crust);
-  --app-view-bg: var(--ctp-frappe-mantle);
-  --app-bg: var(--ctp-frappe-crust);
-  --app-button: var(--ctp-frappe-base);
-  --note-fg: var(--ctp-frappe-yellow);
-  --save-redirect-bg: var(--ctp-frappe-crust);
-  --save-redirect-input-bg: var(--ctp-frappe-base);
-  --footer-color: var(--ctp-frappe-mantle);
-}
-
-[data-theme='macchiato'] {
-  --bg-color: var(--ctp-macchiato-base);
-  --fg-color: var(--ctp-macchiato-text);
-  --link-color: var(--ctp-macchiato-blue);
-  --login-ui-bg: var(--ctp-macchiato-mantle);
-  --login-script-notinstalled: var(--ctp-macchiato-red);
-  --login-script-installed: var(--ctp-macchiato-green);
-  --theme-cycler-bg-color: var(--ctp-macchiato-crust);
-  --inline-code-bg-color: var(--ctp-macchiato-crust);
-  --app-view-bg: var(--ctp-macchiato-mantle);
-  --app-bg: var(--ctp-macchiato-crust);
-  --app-button: var(--ctp-macchiato-base);
-  --note-fg: var(--ctp-macchiato-yellow);
-  --save-redirect-bg: var(--ctp-macchiato-crust);
-  --save-redirect-input-bg: var(--ctp-macchiato-base);
-  --footer-color: var(--ctp-macchiato-mantle);
-}
-
-[data-theme='mocha'] {
-  --bg-color: var(--ctp-mocha-base);
-  --fg-color: var(--ctp-mocha-text);
-  --link-color: var(--ctp-mocha-blue);
-  --login-ui-bg: var(--ctp-mocha-mantle);
-  --login-script-notinstalled: var(--ctp-mocha-red);
-  --login-script-installed: var(--ctp-mocha-green);
-  --theme-cycler-bg-color: var(--ctp-mocha-crust);
-  --inline-code-bg-color: var(--ctp-mocha-crust);
-  --app-view-bg: var(--ctp-mocha-mantle);
-  --app-bg: var(--ctp-mocha-crust);
-  --app-button: var(--ctp-mocha-base);
-  --note-fg: var(--ctp-mocha-yellow);
-  --save-redirect-bg: var(--ctp-mocha-crust);
-  --save-redirect-input-bg: var(--ctp-mocha-base);
-  --footer-color: var(--ctp-mocha-mantle);
+  --bg-color: var(--ctp-flavor-base);
+  --fg-color: var(--ctp-flavor-text);
+  --link-color: var(--ctp-flavor-blue);
+  --login-ui-bg: var(--ctp-flavor-mantle);
+  --login-script-notinstalled: var(--ctp-flavor-red);
+  --login-script-installed: var(--ctp-flavor-green);
+  --theme-cycler-bg-color: var(--ctp-flavor-crust);
+  --inline-code-bg-color: var(--ctp-flavor-crust);
+  --app-view-bg: var(--ctp-flavor-mantle);
+  --app-bg: var(--ctp-flavor-crust);
+  --app-button: var(--ctp-flavor-base);
+  --note-fg: var(--ctp-flavor-yellow);
+  --save-redirect-bg: var(--ctp-flavor-crust);
+  --save-redirect-input-bg: var(--ctp-flavor-base);
+  --footer-color: var(--ctp-flavor-mantle);
+  --nprogress-color: var(--ctp-flavor-sky);
+  --nprogress-accent-color: var(--ctp-flavor-blue);
 }
 
 * {
@@ -99,3 +46,14 @@ hr {
   border-bottom: 1px solid var(--fg-color);
 }
 
+#nprogress .bar {
+  background: linear-gradient(to right, var(--nprogress-color), var(--nprogress-accent-color)) !important;
+  height: 4px !important;
+  box-shadow: 0px -1px 6px 1px var(--nprogress-color);
+}
+
+#nprogress .peg {
+  width: 500px !important;
+  transform: rotate(1deg) translate(0px, -4px) !important; 
+  box-shadow: 0 0 20px var(--nprogress-accent-color), 0 0 10px var(--nprogress-accent-color) !important;
+}
