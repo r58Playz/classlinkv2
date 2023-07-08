@@ -27,7 +27,7 @@ export default function Anal({sd}) {
         <li>Record apps:</li>
         <ul>
           {sd.recordApps.map(app=>{
-            return <li>{app.AppName} ({app.AppId}): {app.Count} {app.Count===1 ? 'login' : 'logins'} and {app.activeS} active seconds</li>
+            return <li key={app.AppId}>{app.AppName} ({app.AppId}): {app.Count} {app.Count===1 ? 'login' : 'logins'} and {app.activeS} active seconds</li>
           })}
         </ul>
       </ul>
@@ -41,7 +41,7 @@ export default function Anal({sd}) {
           return (
             <div key={login.Id} className={styles.lastLogin}>
               <span>{login.Browser} on {login.OS}</span>
-              <div class={styles.expand}></div>
+              <div className={styles.expand}></div>
               <span>{login.Date}</span>
             </div>
           )
