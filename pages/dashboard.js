@@ -110,6 +110,12 @@ function NerdStats({sd}) {
       <p>
         Like the YouTube option.
       </p>
+      <p>Your tokens:</p>
+      <ul>
+        <li>Classlink "login code": <CB>{sd.code}</CB></li>
+        <li>Bearer token: <CB>{sd.token}</CB></li>
+        <li>GWS token (analytics): <CB>{sd.gws}</CB></li>
+      </ul>
       <p>Your user data:</p>
       <ul>
       {Object.entries(sd.fullData).map(([key, value])=>{
@@ -137,7 +143,11 @@ function Utilities() {
   const [endSession, setEndSession] = useState(false)
 
   const [alaSendDisabled, setAlaSendDisabled] = useState(false);
+  const [currentLaunchToken, setCurrentLaunchToken] = useState(null);
   const alaInputRef = useRef(null);
+
+  const [apptimerSendDisabled, setApptimerSendDisabled] = useState(true);
+  const [apptimerActiveS, setApptimerActiveS] = useState(0);
 
   const startSessionHandler = async () => {
     setStartSession(true);
@@ -164,8 +174,24 @@ function Utilities() {
   
   const alaSendHandler = async () => {
     setAlaSendDisabled(true);
-    await fetch("/api/clAnal/ala?id="+alaInputRef.current.value);
+    const json = await fetch("/api/clAnal/ala?id="+alaInputRef.current.value).then(r=>r.json());
+    setCurrentLaunchToken(json.launchToken);
     setAlaSendDisabled(false);
+    setApptimerSendDisabled(false);
+  }
+
+  const apptimerSendActivity = async () => {
+    setApptimerSendDisabled(true);
+    const json = await fetch(`/api/apptimer/activity?launchToken=${currentLaunchToken}&time=300`).then(r=>r.json());
+    setApptimerActiveS(json.activeS);
+    setApptimerSendDisabled(false);
+  }
+
+  const apptimerSendClose = async () => {
+    setApptimerSendDisabled(true);
+    const json = await fetch(`/api/apptimer/close?launchToken=${currentLaunchToken}&time=300`).then(r=>r.json());
+    setApptimerActiveS(json.activeS)
+    setCurrentLaunchToken("");
   }
 
   return (
@@ -181,6 +207,15 @@ function Utilities() {
       <div className={styles.flexBtns}>
         <input placeholder="App ID" onChange={alaInputHandler} ref={alaInputRef} className={`${styles.inputEl} ${styles.expand}`} />
         <button disabled={alaSendDisabled} className={styles.classlinkButton} onClick={alaSendHandler}>Send</button>
+      </div>
+      <p>The pinnacle of trolling: Send an "apptimer" event to spoof how long an app has been active for. Requires a launch token acquired from the app launch event above.</p>
+      <div className={styles.flexBtns}>
+        <input placeholder="Launch token" disabled value={currentLaunchToken ?? undefined} className={`${styles.inputEl} ${styles.expand}`}/>
+      </div>
+      <p>Server sent active seconds: {apptimerActiveS}</p>
+      <div className={styles.flexBtns}>
+        <button disabled={apptimerSendDisabled} className={styles.classlinkButton} onClick={apptimerSendActivity}>Activity event</button>
+        <button disabled={apptimerSendDisabled} className={styles.classlinkButton} onClick={apptimerSendClose}   >Close event</button>
       </div>
     </div>
   )
@@ -232,13 +267,11 @@ export default function Dashboard({sd}) {
         <p>
           You can add <CB>?id=&lt;insert app id here&gt;</CB> to the end of this URL to quickly log into an app. This won't work if you have been logged out however, since you will have to use the jump script to log back in. App IDs can be found between the app name and login button in small letters.
         </p>
+        <p>Open:</p>
         <div className={styles.flexBtns}>
-          <button onClick={classLinkHandler} className={styles.classlinkButton}>Open ClassLink</button>
-          <Link 
-            className={`${backpackData.enableStudentbackpack!=='1' ? styles.classlinkLinkDisabled : ''} ${styles.classlinkLink}`} 
-            href="/backpack">
-            {backpackData.enableStudentbackpack==='1' ? "Open Backpack Frontend" : "Backpack disabled by admin"}
-          </Link>
+          <button onClick={classLinkHandler} className={styles.classlinkButton}>Classlink</button>
+          <Link className={styles.classlinkLink} href="/backpack">Backpack</Link>
+          <Link className={styles.classlinkLink} href="/anal">Analytics</Link>
         </div>
       </div> }
       <AppsView data={sd.apps} alaEnabled={enableAppLaunchAnalytics} />
@@ -270,7 +303,16 @@ export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const userData = await fetchWithBearer("https://nodeapi.classlink.com/v2/my/info", data.cookies.t).then(r=>r.json());
     const apps = await fetchWithBearer("https://applications.apis.classlink.com/v1/applicationsPageLoad?", data.cookies.t).then(r=>r.json());
-    const backpackData = await fetchWithBearer("https://nodeapi.classlink.com/tenant/customization/backpack", data.cookies.t).then(r=>r.json());
-    return { name: `${userData.FirstName} ${userData.LastName}`, userName: userData.DisplayName, districtName: userData.Tenant, email: userData.Email, apps: apps.apps, fullData: userData, backpackData }
+    return {
+      name: `${userData.FirstName} ${userData.LastName}`,
+      userName: userData.DisplayName,
+      districtName: userData.Tenant,
+      email: userData.Email,
+      apps: apps.apps,
+      fullData: userData,
+      token: data.cookies.t,
+      code: data.cookies.c,
+      gws: data.cookies.g,
+    };
   });
 }

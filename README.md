@@ -50,4 +50,9 @@ startDate & endDate can be used for all of these
  - get apps logins data: `https://analytics-data.classlink.io/my/v1p0/apps/top/history` - this 500'd 
  - get apps logins data: `https://analytics-data.classlink.io/my/v1p0/apps/records` - this 500'd
 
-no idea how apptimer works
+no idea how apptimer works - r58 (a few days ago)
+
+### The downfall of apptimer
+They use this shitty ass extension to track the user, every 10 fucking milliseconds
+ - Activity: `https://analytics-log.classlink.io/activity/v1p0/activity?launchToken=&activeS=` - appends to the time & requires gws
+ - Close: `https://analytics-log.classlink.io/activity/v1p0/close?launchToken=&activeS=` - records a close event, marking launch token as invalid and appends to the time

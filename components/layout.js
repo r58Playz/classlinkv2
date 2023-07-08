@@ -18,6 +18,7 @@ export default function Layout({ title, children }) {
       </Head>
       <ThemeButton></ThemeButton>
       <div children={children}></div>
+      <hr />
       <div className={styles.footer}>
         Made with Next.js (not love) by <a href="https://r58playz.dev">r58Playz</a>
       </div>
