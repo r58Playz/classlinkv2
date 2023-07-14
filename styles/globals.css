@@ -5,6 +5,7 @@
   --login-ui-bg: var(--ctp-flavor-mantle);
   --login-script-notinstalled: var(--ctp-flavor-red);
   --login-script-installed: var(--ctp-flavor-green);
+  --login-script-outofdate: var(--ctp-flavor-yellow);
   --theme-cycler-bg-color: var(--ctp-flavor-crust);
   --inline-code-bg-color: var(--ctp-flavor-crust);
   --app-view-bg: var(--ctp-flavor-mantle);
@@ -14,8 +15,10 @@
   --save-redirect-bg: var(--ctp-flavor-crust);
   --save-redirect-input-bg: var(--ctp-flavor-base);
   --footer-color: var(--ctp-flavor-mantle);
-  --nprogress-color: var(--ctp-flavor-sky);
-  --nprogress-accent-color: var(--ctp-flavor-blue);
+
+
+  --nprogress-color: var(--ctp-flavor-maroon);
+  --nprogress-accent-color: var(--ctp-flavor-peach);
 }
 
 * {

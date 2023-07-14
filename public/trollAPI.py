@@ -12,19 +12,22 @@ import requests
 import sys
 from datetime import datetime as datetime
 
+def exit(code):
+    sys.exit(code)
+
 if not len(sys.argv) == 3:
     print("usage: python3 trollAPI.py bearerToken gwsToken")
-    sys.exit(1)
+    exit(1)
 
 bearerToken=sys.argv[1]
 gwsToken=sys.argv[2]
 
 if launchAppFrequency != 1.0 and launchAppFrequency % 2.0 != 0:
     print("error: launchAppFrequency is not even or 1.0")
-    sys.exit(1)
+    exit(1)
 if launchAppFrequency < 1.0:
     print("error: launchAppFrequency is less than 1.0")
-    sys.exit(1)
+    exit(1)
 
 starttime = time.time()
 currentLaunchToken = ""
@@ -46,7 +49,10 @@ def getWithBearer(url, queryString, token):
 
 
 def startSession():
-    postWithBearer("https://applications.apis.classlink.com/v1/startSession", None, bearerToken)
+    out = postWithBearer("https://applications.apis.classlink.com/v1/startSession", None, bearerToken).text;
+    if out != '"Session Started"':
+        print("Token has expired.")
+        exit(1)
 
 def resetTimeout():
     postWithBearer("https://applications.apis.classlink.com/v1/resetSessionTimeout", None, bearerToken)
@@ -60,7 +66,8 @@ def sendAppLaunch():
     return jsonOutput['launchToken']
 
 def sendAppActivity():
-    postWithGws("https://analytics-log.classlink.io/activity/v1p0/activity", {"launchToken":currentLaunchToken,"activeS":300}, gwsToken);
+    out = postWithGws("https://analytics-log.classlink.io/activity/v1p0/activity", {"launchToken":currentLaunchToken,"activeS":300}, gwsToken).json()
+    if verbose: print(out)
 
 def sendCloseApp():
     postWithGws("https://analytics-log.classlink.io/activity/v1p0/close", {"launchToken":currentLaunchToken,"activeS":300}, gwsToken);
@@ -80,31 +87,43 @@ def printStats():
     print(f"Monthly: {recordLogins['month']['Logins']} on {recordLogins['month']['Date']}")
     print(f"Yearly: {recordLogins['yearly']['Logins']} on {recordLogins['yearly']['startDate']} - {recordLogins['yearly']['endDate']}")
 
-while True:
-    deltaFromStart = time.time() - starttime
-    timeMod23H = deltaFromStart % (60.0 * 60.0 * 3.75) 
-    timeMod24H = deltaFromStart % (60.0 * 60.0 * 4) 
-    timeMod300S = deltaFromStart % 300.0
-    startSession()
-    if timeMod23H < 1:
-        if not firstLoopIteration: 
-            if verbose: print("Sending close app")
-            sendCloseApp()
-        resetTimeout()
-        if verbose: print("Reset timeout of token")
-        currentLaunchToken = sendAppLaunch()
-        if verbose: print("Current launch token:", currentLaunchToken)
-    if timeMod24H < 1:
-        dayCount += 1
-        print(f"{dayCount} days since this script was started")
-        printStats()
-    if timeMod300S < 1:
-        sendAppActivity()
-        if verbose: print("Sent app activity")
-    if verbose: print("Sending app launch")
-    sendAppLaunch()
+def cleanup():
+    sendCloseApp()
+    print("Sent close app")
     endSession()
-    if(firstLoopIteration): firstLoopIteration = False
-    time.sleep(launchAppFrequency - ((time.time() - starttime) % launchAppFrequency))
+    print("Sent end session")
+    resetTimeout()
+    print("Reset timeout of token")
 
+try:
+    while True:
+        deltaFromStart = time.time() - starttime
+        timeMod23H = deltaFromStart % (60.0 * 60.0 * 3.75) 
+        timeMod24H = deltaFromStart % (60.0 * 60.0 * 4) 
+        timeMod300S = deltaFromStart % 300.0
+        startSession()
+        if timeMod23H < 1:
+            if not firstLoopIteration: 
+                if verbose: print("Sending close app")
+                sendCloseApp()
+            resetTimeout()
+            if verbose: print("Reset timeout of token")
+            currentLaunchToken = sendAppLaunch()
+            if verbose: print("Current launch token:", currentLaunchToken)
+        if timeMod24H < 1:
+            dayCount += 1
+            print(f"{dayCount} days since this script was started")
+            printStats()
+        if timeMod300S < 1:
+            sendAppActivity()
+        sendAppLaunch()
+        endSession()
+        if(firstLoopIteration): firstLoopIteration = False
+        time.sleep(launchAppFrequency - ((time.time() - starttime) % launchAppFrequency))
+except Exception as e:
+    cleanup()
+    raise e
+except KeyboardInterrupt as e:
+    cleanup()
+    raise e
 

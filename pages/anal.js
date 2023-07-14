@@ -16,9 +16,6 @@ export default function Anal({sd}) {
       </p>
       <hr />
       <div className={styles.medheading}>Records</div>
-      <p className={styles.note}>
-        Note: The "seconds active" metric is sort of a black-box, I haven't been able to figure out how it works. It would be amazing to spoof!
-      </p>
       <ul>
         <li>Record daily logins: {sd.recordLogins.daily.Logins} on {sd.recordLogins.daily.Date}</li>
         <li>Record weekly logins: {sd.recordLogins.weeks.Logins} from {sd.recordLogins.weeks.startDate} to {sd.recordLogins.weeks.endDate}</li>
@@ -33,9 +30,6 @@ export default function Anal({sd}) {
       </ul>
       <hr />
       <div className={styles.medheading}>Last 10 Logins</div>
-      <p className={styles.note}>
-        Note: These "logins" refer to when you started a session, not when you actually logged in.
-      </p>
       <div className={styles.lastLoginsView}>
         {sd.lastLogins.map(login=>{
           return (

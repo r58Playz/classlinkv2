@@ -23,6 +23,10 @@
   color: var(--login-script-installed);
 }
 
+.outOfDate {
+  color: var(--login-script-outofdate);
+}
+
 .detecting {
   color: var(--note-fg);
 }

@@ -1,6 +1,6 @@
 import Layout from '@/components/layout.js';
 import styles from '@/styles/dashboard.module.css';
-import fetchWithBearer, { uiHelper } from '@/lib/classlink.js';
+import fetchWithBearer, { uiHelper, app2url } from '@/lib/classlink.js';
 import { CB } from '@/components/utils.js'
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -10,23 +10,12 @@ function AppsView({ data, alaEnabled }) {
   const urlHandler = (url) => {
     window.open(url, '_blank');
   }
-  const ltissoHandler = (id) => {
-    window.open("https://launchpad.classlink.com/ltisso/"+id, "_blank");
-  }
-  const browserssoHandler = (id) => {
-    window.open("https://launchpad.classlink.com/browsersso/"+id, "_blank");
-  }
-  const appHandler = (url, id, type, alaEnabled) => {
-    switch(type) {
-      case 15:
-        return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+id)};browserssoHandler(id)}} className={styles.appLogIn}>Log In</button>
-      case 16:
-        return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+id)};ltissoHandler(id)}} className={styles.appLogIn}>Log In</button>
-      case 30:
-      case 31:
-        return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+id)};urlHandler(url[0])}} className={styles.appLogIn}>Log In</button>
-      default:
-        return <button disabled className={styles.appLogIn}>Unsupported</button>
+  const appHandler = (app, alaEnabled) => {
+    const url = app2url(app);
+    if(url !== null) {
+      return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+id)};urlHandler(url)}} className={styles.appLogIn}>Log In</button>
+    } else {
+      return <button disabled className={styles.appLogIn}>Unsupported</button>
     }
   }
 
@@ -37,25 +26,14 @@ function AppsView({ data, alaEnabled }) {
         const targetId = parseInt(searchParams.get("id"));
         const app = data.filter(({id}) => id === targetId);
         if(app.length) {
-          const a = app[0];
-          switch(a.type) {
-            case 15:
-              if(alaEnabled){fetch("/api/clAnal/ala?id="+a.id)};
-              window.location = "https://launchpad.classlink.com/browsersso/"+a.id;
-              break;
-            case 16:
-              if(alaEnabled){fetch("/api/clAnal/ala?id="+a.id)};
-              window.location = "https://launchpad.classlink.com/ltisso/"+a.id;
-              break;
-            case 30:
-            case 31:
-              if(alaEnabled){fetch("/api/clAnal/ala?id="+a.id)};
-              window.location = a.url[0];
-              break;
-            default:
-              setInstantLoginData("__CLASSLINKV2_UNSUPPORTED_APP__");
-              return;
+          const url = app2url(app[0]);
+          if(url !== null) {
+            window.location = a.url[0];
+          } else {
+            setInstantLoginData("__CLASSLINKV2_UNSUPPORTED_APP__");
+            return;
           }
+          if(alaEnabled){fetch("/api/clAnal/ala?id="+a.id)};
           setInstantLoginData(a.name);
         } else {
           setInstantLoginData("__CLASSLINKV2_NOT_FOUND__");
@@ -88,13 +66,16 @@ function AppsView({ data, alaEnabled }) {
 
   return (
     <div className={styles.appsView}>
-      { data.map(({ name, icon, url, id, type }) => {
+      { data.map((app) => {
+        const name = app.name;
+        const icon = app.icon;
+        const id = app.id;
         return (
           <div className={styles.app} key={name}>
             <img width="48" height="48" src={icon} alt={name} className={styles.appIcon} />
             <div className={styles.appName}>{name}</div>
             <div className={styles.appId}>{id}</div>
-            {appHandler(url, id, type, alaEnabled)}
+            {appHandler(app, alaEnabled)}
           </div>
         )
       }) }
@@ -217,6 +198,15 @@ function Utilities() {
         <button disabled={apptimerSendDisabled} className={styles.classlinkButton} onClick={apptimerSendActivity}>Activity event</button>
         <button disabled={apptimerSendDisabled} className={styles.classlinkButton} onClick={apptimerSendClose}   >Close event</button>
       </div>
+      <p>
+        You can also use <a href="/trollAPI.py">the trollAPI python script</a> which will automatically spam analytics for you. You need to install the <CB>requests</CB> library and then edit the configuration at the top of the file. To run, just pass your bearer and GWS token on the command line like so:
+      </p>
+      <p>
+        <CB>python3 trollAPI.py bearerToken gwsToken</CB>
+      </p>
+      <p>
+        Your bearer and GWS tokens are available in the Stats for nerds section below.
+      </p>
     </div>
   )
 }
@@ -262,7 +252,7 @@ export default function Dashboard({sd}) {
       { !currentlyLoggingIn && <div>
         <div className={styles.medheading}>Apps</div>
         <p className={styles.note}>
-          NOTE: Some apps are unsupported, there's no documentation for the APIs I'm using so I have no idea how some app "types" work. There is a button to open ClassLink if any apps are unsupported below. You cannot open Classlink normally, you will need to use this button.
+          NOTE: There is a button to open ClassLink if any apps are unsupported below. You cannot open Classlink normally, you will need to use this button.
         </p>
         <p>
           You can add <CB>?id=&lt;insert app id here&gt;</CB> to the end of this URL to quickly log into an app. This won't work if you have been logged out however, since you will have to use the jump script to log back in. App IDs can be found between the app name and login button in small letters.

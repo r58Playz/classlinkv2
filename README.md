@@ -56,3 +56,8 @@ no idea how apptimer works - r58 (a few days ago)
 They use this shitty ass extension to track the user, every 10 fucking milliseconds
  - Activity: `https://analytics-log.classlink.io/activity/v1p0/activity?launchToken=&activeS=` - appends to the time & requires gws
  - Close: `https://analytics-log.classlink.io/activity/v1p0/close?launchToken=&activeS=` - records a close event, marking launch token as invalid and appends to the time
+
+
+### App Library
+ - `application-autocomplete.apis.classlink.com/v1/paged/appLibrary/<id>?limit=<int>` (max 100)
+ - `applications.apis.classlink.com/v1/applibrary/[un]assignApp/[id]` POST if assigning DELETE if unassigning
