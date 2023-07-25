@@ -4,5 +4,5 @@ export function CB({ children }) {
   return <span className={styles.inlineCode} children={children}></span>
 }
 
-const jumpScriptVersion = "nya~1.3";
+const jumpScriptVersion = "nya~1.3~patch";
 export default jumpScriptVersion;
