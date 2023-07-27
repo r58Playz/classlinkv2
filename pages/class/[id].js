@@ -53,7 +53,7 @@ export default function Class({ id, sd }) {
 export async function getServerSideProps({ params, req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const id = params.id;
-    const userData = await fetchWithBearer("https://nodeapi.classlink.com/v2/my/info", data.cookies.t).then(r=>r.json());
+    const userData = data.userData;
     const classData = await fetchWithBearer("https://myclasses.apis.classlink.com/v1/classes/"+id, data.cookies.t);
     if(classData.status!==200) return {redirect: {permanent: false, destination: "/backpack"}}
     const classDataJson = await classData.json();

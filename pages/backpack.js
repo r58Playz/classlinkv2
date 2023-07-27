@@ -45,7 +45,7 @@ export default function Backpack({sd}) {
 
 export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
-    const userData = await fetchWithBearer("https://nodeapi.classlink.com/v2/my/info", data.cookies.t).then(r=>r.json());
+    const userData = data.userData;
     const backpackData = await fetchWithBearer("https://nodeapi.classlink.com/tenant/customization/backpack", data.cookies.t).then(r=>r.json());
     const schoolyearData = await fetchWithGws("https://analytics-data.classlink.io/teacherConsole/v1p0/schoolyear", data.cookies.g).then(r=>r.json());
     const classesData = await fetchWithBearer("https://myclasses.apis.classlink.com/v1/classes", data.cookies.t).then(r=>r.json());

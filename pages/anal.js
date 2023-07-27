@@ -88,7 +88,7 @@ export default function Anal({sd}) {
 export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const jf = async (url)=>{return await fetchWithBearer(url, data.cookies.t).then(r=>r.json())}
-    const userData = await jf("https://nodeapi.classlink.com/v2/my/info");
+    const userData = data.userData;
     const lastLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins?limit=10"); 
     const dailyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/daily");
     const weeklyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/weekly");

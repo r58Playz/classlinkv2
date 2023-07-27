@@ -291,7 +291,7 @@ export default function Dashboard({sd}) {
 
 export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
-    const userData = await fetchWithBearer("https://nodeapi.classlink.com/v2/my/info", data.cookies.t).then(r=>r.json());
+    const userData = data.userData;
     const apps = await fetchWithBearer("https://applications.apis.classlink.com/v1/applicationsPageLoad?", data.cookies.t).then(r=>r.json());
     return {
       name: `${userData.FirstName} ${userData.LastName}`,
