@@ -157,7 +157,7 @@ function RedirectUI() {
 export default function LoginStage1() {
   let [hasJumpScript, setHasJumpScript] = useState("detecting");
 
-  useEffect(()=>{
+  const func = ()=>{
     const r = localStorage.getItem("redirectUri")
     if(r && window.jumpScriptInstalled === jumpScriptVersion) {window.location=r} 
     if(window.jumpScriptInstalled === jumpScriptVersion) {
@@ -167,7 +167,9 @@ export default function LoginStage1() {
     } else if(window.jumpScriptInstalled !== jumpScriptVersion) {
       setHasJumpScript("outofdate");
     }
-  });
+  }
+
+  useEffect(()=>{func()},[]);
 
   let Component = DetectingUI;
   if(hasJumpScript === "yes") {
@@ -183,6 +185,10 @@ export default function LoginStage1() {
     <div className={styles.container}>
       <div className={styles.header}>Log In</div>
       <Component />
+      <button onClick={()=>{
+        setHasJumpScript("detecting");
+        setTimeout(func,250);
+      }}>Reload</button>
     </div>
   )
 }
