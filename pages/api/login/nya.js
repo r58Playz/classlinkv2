@@ -1,4 +1,4 @@
-import { apiRouteHelper } from "@/lib/classlink.js";
+import fetchWithBearer, { apiRouteHelper } from "@/lib/classlink.js";
 
 export default async function handler(req, res) {
   return await apiRouteHelper(req, res, {cookies: "femboy", queryString: ["code","token","gws"]}, async (req, res, data) => {
