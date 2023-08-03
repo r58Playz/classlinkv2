@@ -95,7 +95,7 @@ export async function getServerSideProps({ req, res }) {
     const monthlyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/monthly");
     const recordLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/records");
     const lastApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps?limit=10"); 
-    const recordApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5")
+    const recordApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01");
     return {
       name: `${userData.FirstName} ${userData.LastName}`,
       userName: userData.DisplayName,
