@@ -21,11 +21,10 @@ function JumpScriptInstructions() {
     <div>
       <div className={styles.scriptStatus}>Jump script status: <span className={styles.notInstalled}>not detected</span></div>
       <p>
-        Please install the jump script with either uBlock Origin or your favorite userscript manager.
-        If you are using a userscript manager, you will need to manually populate a new userscript with the code and inject rules.
+        Please install the jump script with either uBlock Origin or your favorite userscript manager. If you are using iOS, I recommend <a href="https://apps.apple.com/us/app/userscripts/id1463298887">Userscripts</a> as a userscript manager.
       </p>
       <div className={styles.tile} onClick={()=>{handler(true)}}>{showInstructions && instructionType ? "Hide uBlock Origin instructions" : "Show uBlock Origin instructions"}</div>
-      <div className={styles.tile} onClick={()=>{handler(false)}}>{showInstructions && !instructionType ? "Hide userscript instructions" : "Show userscript instructions"}</div>
+      <div className={styles.tile} onClick={()=>{handler(false)}}>{showInstructions && !instructionType ? "Hide userscript (and iOS) instructions" : "Show userscript (and iOS) instructions"}</div>
       { showInstructions && <p>
         Instructions:
       </p> }
@@ -47,15 +46,9 @@ function JumpScriptInstructions() {
         <li>Click <CB>Apply changes</CB>.</li>
         <li>Reload this page.</li>
       </ol> }
-      {showInstructions && !instructionType && <ol>
-        <li>Create a new userscript.</li>
-        <li>Set it to inject into <CB>classlink.r58playz.dev</CB> and <CB>myapps.classlink.com</CB>.</li>
-        <li>Optionally set it to inject into <CB>launchpad.classlink.com</CB> to enable Classlinkv2's Classlink LaunchPad extension emulation feature.</li>
-        <li>Copy the latest code from in the uBlock Origin scriptlet at <CB>https://classlink.r58playz.dev/userResources</CB>.</li>
-        <li>Paste it into the userscript.</li>
-        <li>Save the userscript.</li>
-        <li>Reload this page.</li>
-      </ol>}
+      {showInstructions && !instructionType && <div><ol>
+        <li>Install the <a href="/classlink.user.js">userscript</a> by clicking on it.</li>
+      </ol><p><b>If you are using iOS</b>, please download and copy the userscript into the userscript folder you selected after setting up the <a href="https://apps.apple.com/us/app/userscripts/id1463298887">Userscripts</a> app.</p></div>}
     </div>
   )
 }
@@ -84,10 +77,10 @@ function OutOfDateInstructions() {
     <div>
       <div className={styles.scriptStatus}>Jump script status: <span className={styles.installed}>detected, </span><span className={styles.outOfDate}>out of date</span></div>
       <p>
-        Please update your jump script version. Your version is <CB>{scriptVersion}</CB> and the latest is <CB>{jumpScriptVersion}</CB>.
+        Please update your jump script version. Your version is <CB>{scriptVersion || "unknown"}</CB> and the latest is <CB>{jumpScriptVersion}</CB>.
       </p>
       <div className={styles.tile} onClick={()=>{handler(true)}}>{showInstructions && instructionType ? "Hide uBlock Origin instructions" : "Show uBlock Origin instructions"}</div>
-      <div className={styles.tile} onClick={()=>{handler(false)}}>{showInstructions && !instructionType ? "Hide userscript instructions" : "Show userscript instructions"}</div>
+      <div className={styles.tile} onClick={()=>{handler(false)}}>{showInstructions && !instructionType ? "Hide userscript (and iOS) instructions" : "Show userscript (and iOS) instructions"}</div>
       { showInstructions && <p>
         Instructions:
       </p> }
@@ -98,13 +91,10 @@ function OutOfDateInstructions() {
         <li>Click on <CB>Update now</CB>.</li>
         <li>Reload this page.</li>
       </ol> }
-      {showInstructions && !instructionType && <ol>
-        <li>Create a new userscript.</li>
-        <li>Copy the latest code from in the uBlock Origin scriptlet at <CB>https://classlink.r58playz.dev/userResources</CB>.</li>
-        <li>Paste it into the userscript.</li>
-        <li>Save the userscript.</li>
-        <li>Reload this page.</li>
-      </ol>}
+      {showInstructions && !instructionType && <div><ol>
+        <li>Delete the original userscript.</li>
+        <li>Install the <a href="/classlink.user.js">userscript</a>.</li>
+      </ol><p><b>If you are using iOS</b>, download the <a href="/classlink.user.js">userscript</a> and replace the file in your userscripts folder with this one.</p></div>}
       <hr />
       <p>
         Version-specific announcements:
@@ -188,7 +178,7 @@ export default function LoginStage1() {
       <button onClick={()=>{
         setHasJumpScript("detecting");
         setTimeout(func,250);
-      }}>Reload</button>
+      }}>Try to detect userscript</button>
     </div>
   )
 }
