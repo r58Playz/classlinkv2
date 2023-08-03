@@ -169,7 +169,7 @@ export default function LoginStage1() {
     }
   }
 
-  useEffect(()=>{func()},[]);
+  useEffect(()=>{setTimeout(func,1000)},[]);
 
   let Component = DetectingUI;
   if(hasJumpScript === "yes") {

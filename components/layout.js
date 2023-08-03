@@ -17,10 +17,13 @@ export default function Layout({ title, children }) {
 
   useEffect(()=>{
     if(router.asPath === "/") return;
-    if(window.jumpScriptInstalled !== jumpScriptVersion && !redirecting) {
-      router.replace('/');
-      setRedirecting(true);
-    } 
+    setTimeout(()=>{
+      if(window.jumpScriptInstalled !== jumpScriptVersion && !redirecting) {
+        router.replace('/');
+        setRedirecting(true);
+      }
+      }, 1000); 
+    // support ios by using the setTimeout
   });
 
   return (
