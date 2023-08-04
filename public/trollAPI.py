@@ -55,7 +55,8 @@ def startSession():
         exit(1)
 
 def resetTimeout():
-    postWithBearer("https://applications.apis.classlink.com/v1/resetSessionTimeout", None, bearerToken)
+    out = postWithBearer("https://applications.apis.classlink.com/v1/resetSessionTimeout", None, bearerToken).json()
+    if verbose: print(out)
 
 def endSession():
     postWithBearer("https://applications.apis.classlink.com/v1/endSession", None, bearerToken)
@@ -106,8 +107,6 @@ try:
             if not firstLoopIteration: 
                 if verbose: print("Sending close app")
                 sendCloseApp()
-            resetTimeout()
-            if verbose: print("Reset timeout of token")
             currentLaunchToken = sendAppLaunch()
             if verbose: print("Current launch token:", currentLaunchToken)
         if timeMod24H < 1:
@@ -115,6 +114,8 @@ try:
             print(f"{dayCount} days since this script was started")
             printStats()
         if timeMod300S < 1:
+            resetTimeout()
+            if verbose: print("Reset timeout of token")
             sendAppActivity()
         sendAppLaunch()
         endSession()
