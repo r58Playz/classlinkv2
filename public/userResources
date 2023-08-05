@@ -6,14 +6,20 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const r = ()=>{const d = document;d.open();d.write("");d.close()};
   const dev = false;
   if(h === "classlink.r58playz.dev" || h === "localhost") {
-    window.jumpScriptInstalled = "nya~1.4"; 
+    window.jumpScriptInstalled = "nya~1.5"; 
   } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && s.get("skipIntercept")) {
     localStorage["nyaclSkip"] = "nya";
-  } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && !s.get("skipIntercept") && localStorage["nyaclSkip"] === "nya") {
+    const interval = setInterval(()=>{
+      if(window.location.pathname.includes("home")) {
+        localStorage["nyaclSkip"] = "nope";
+        clearInterval(interval);
+      }
+    }, 100);
+  } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && !s.get("skipIntercept") && localStorage["nyaclSkip"] !== "nya") {
     // Intercept login
     r();
     window.location=`${dev ? 'http://localhost:3000' : 'https://classlink.r58playz.dev'}/api/login/stage2?code=${s.get("code")}`
-  } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("home") {
+  } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("home")) {
     localStorage["nyaclSkip"] = "nope";
   } else if ((h === "launchpad.classlink.com" || h === "stagingclouddesktop.classlink.com") && p.includes("browsersso")) {
     // spoof detection for browsersso - copied straight from the extension, except with giant version
