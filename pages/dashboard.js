@@ -68,8 +68,7 @@ function AppsView({ data, alaEnabled }) {
   return (
     <div className={styles.appsView}>
       { data.map((app) => {
-        let name = app.name; 
-        if(name === "Infinite Campus Student") name = "owo owo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa nasiufglufis ofigu uyr ew9 ihg"
+        const name = app.name; 
         const icon = app.icon;
         const id = app.id;
 
