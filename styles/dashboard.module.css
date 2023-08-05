@@ -20,7 +20,7 @@
   margin-top: 1em;
   border-radius: 16px;
   padding: 1em;
-  grid-auto-rows: 128px;
+  grid-auto-rows: 256px;
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 128px);
   grid-column-gap: 1em;
