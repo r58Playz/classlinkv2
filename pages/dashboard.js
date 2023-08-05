@@ -255,7 +255,7 @@ export default function Dashboard({sd}) {
       { !currentlyLoggingIn && <div>
         <div className={styles.medheading}>Apps</div>
         <p className={styles.note}>
-          NOTE: There is a button to open ClassLink if any apps are unsupported below. You cannot open Classlink normally, you will need to use this button.
+          NOTE: There is a button to open ClassLink if any apps are unsupported below. You cannot open Classlink normally, you will need to use this button. If you get redirected here, regular Classlink did not fully log in, and it should work after another try.
         </p>
         <p>
           You can add <CB>?id=&lt;insert app id here&gt;</CB> to the end of this URL to quickly log into an app. This won't work if you have been logged out however, since you will have to use the jump script to log back in. App IDs can be found between the app name and login button in small letters.

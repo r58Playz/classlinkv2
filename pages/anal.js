@@ -17,14 +17,14 @@ export default function Anal({sd}) {
       <hr />
       <div className={styles.medheading}>Records</div>
       <ul>
-        <li>Record daily logins: {sd.recordLogins.daily.Logins} on {sd.recordLogins.daily.Date}</li>
-        <li>Record weekly logins: {sd.recordLogins.weeks.Logins} from {sd.recordLogins.weeks.startDate} to {sd.recordLogins.weeks.endDate}</li>
-        <li>Record monthly logins: {sd.recordLogins.month.Logins} on {sd.recordLogins.month.Date}</li>
-        <li>Record yearly logins: {sd.recordLogins.yearly.Logins} from {sd.recordLogins.yearly.startDate} to {sd.recordLogins.yearly.endDate}</li>
+        <li>Record daily logins: {sd.recordLogins.daily.Logins.toLocaleString()} on {sd.recordLogins.daily.Date}</li>
+        <li>Record weekly logins: {sd.recordLogins.weeks.Logins.toLocaleString()} from {sd.recordLogins.weeks.startDate} to {sd.recordLogins.weeks.endDate}</li>
+        <li>Record monthly logins: {sd.recordLogins.month.Logins.toLocaleString()} on {sd.recordLogins.month.Date}</li>
+        <li>Record yearly logins: {sd.recordLogins.yearly.Logins.toLocaleString()} from {sd.recordLogins.yearly.startDate} to {sd.recordLogins.yearly.endDate}</li>
         <li>Record apps:</li>
         <ul>
           {sd.recordApps.map(app=>{
-            return <li key={app.AppId}>{app.AppName} ({app.AppId}): {app.Count} {app.Count===1 ? 'login' : 'logins'} and {app.activeS} active seconds</li>
+            return <li key={app.AppId}>{app.AppName} ({app.AppId}): {app.Count.toLocaleString()} {app.Count===1 ? 'login' : 'logins'} and {app.activeS.toLocaleString()} active seconds</li>
           })}
         </ul>
       </ul>
@@ -34,7 +34,7 @@ export default function Anal({sd}) {
         {sd.lastLogins.map(login=>{
           return (
             <div key={login.Id} className={styles.lastLogin}>
-              <span>{login.Browser} on {login.OS}</span>
+              <span>{login.Browser==="MobileApp"?"Mobile app":login.Browser}{login.OS?` on ${login.OS}`:""}</span>
               <div className={styles.expand}></div>
               <span>{login.Date}</span>
             </div>
@@ -60,7 +60,7 @@ export default function Anal({sd}) {
         <ul>
           {sd.dailyLogins.map((data)=>{
             return (
-              <li key={data.Date}>{data.Date}: {data.Logins}</li>
+              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
             )
           })}
         </ul>
@@ -68,7 +68,7 @@ export default function Anal({sd}) {
         <ul>
           {sd.weeklyLogins.map((data)=>{
             return (
-              <li key={data.Date}>{data.Date}: {data.Logins}</li>
+              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
             )
           })}
         </ul>
@@ -76,7 +76,7 @@ export default function Anal({sd}) {
         <ul>
           {sd.monthlyLogins.map((data)=>{
             return (
-              <li key={data.Date}>{data.Date}: {data.Logins}</li>
+              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
             )
           })}
         </ul>
