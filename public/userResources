@@ -41,5 +41,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
       })
     })
     observer.observe(document.querySelector(".container"), {attributeFilter:["style"],subtree:true});
+    // or in some cases...
+    document.documentElement.addEventListener("classlink-extension-msg",(e)=>{window.location.href=e.detail.appResponse.login_url});
   }
 });
