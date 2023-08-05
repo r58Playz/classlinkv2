@@ -4,7 +4,6 @@ import fetchWithBearer, { uiHelper, app2url } from '@/lib/classlink.js';
 import { CB } from '@/components/utils.js'
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import ClampLines from 'react-clamp-lines';
 
 function AppsView({ data, alaEnabled }) {
   let [instantLoginData, setInstantLoginData] = useState(false);
