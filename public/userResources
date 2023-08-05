@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", ()=>{
   const r = ()=>{const d = document;d.open();d.write("");d.close()};
   const dev = false;
   if(h === "classlink.r58playz.dev" || h === "localhost") {
-    window.jumpScriptInstalled = "nya~1.5"; 
+    window.jumpScriptInstalled = "nya~1.6"; 
   } else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && s.get("skipIntercept")) {
     localStorage["nyaclSkip"] = "nya";
     const interval = setInterval(()=>{
