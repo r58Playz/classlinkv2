@@ -22,7 +22,7 @@
   padding: 1em;
   grid-auto-rows: 256px;
   grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fill, 128px);
+  grid-template-columns: repeat(auto-fill, 256px);
   grid-column-gap: 1em;
   background-color: var(--app-view-bg);
   justify-content: space-between;
