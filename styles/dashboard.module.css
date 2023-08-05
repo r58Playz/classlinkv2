@@ -20,9 +20,9 @@
   margin-top: 1em;
   border-radius: 16px;
   padding: 1em;
-  grid-auto-rows: 256px;
+  grid-auto-rows: 128px;
   grid-row-gap: 1em;
-  grid-template-columns: repeat(auto-fill, 256px);
+  grid-template-columns: repeat(auto-fill, 128px);
   grid-column-gap: 1em;
   background-color: var(--app-view-bg);
   justify-content: space-between;
@@ -47,14 +47,14 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 256px;
+  width: 128px;
   overflow: hidden;
 }
 
 .appIcon {
   padding-top: 8px;
-  width: 64px;
-  height: 64px;
+  width: 48px;
+  height: 48px;
 }
 
 .appName {
