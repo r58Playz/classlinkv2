@@ -6,11 +6,12 @@ import Link from 'next/link';
 export default function Backpack({sd}) {
   return (
     <Layout title="Backpack">
-      {sd.backpackData.enableStudentbackpack!=='1' ? <div><div className={styles.note}>Backpack has been disabled by admin.</div><div className={styles.margin}></div><Link href="/dashboard" className={styles.classlinkLink}>Return to Classlinkv2</Link></div> : <div>
+      <div>
         <div className={styles.heading}>Classlinkv2 Backpack</div>
         <div className={styles.subheading}>Hello {sd.name} ({sd.districtName})</div>
         <div>{sd.userName}: {sd.email}</div>
         <div className={styles.margin}></div>
+        {sd.backpackData.enableStudentbackpack!=="1"?<p className={styles.note}>WARNING: Backpack has been disabled by admin. You are not supposed to see this info, but the APIs are still accessible.</p>:""}
         <Link href="/dashboard" className={styles.classlinkLink}>Return to Classlinkv2</Link>
         <hr />
         <div className={styles.medheading}>School Year Info</div>
@@ -38,7 +39,7 @@ export default function Backpack({sd}) {
             )
           })}
         </div>
-      </div>}
+      </div>
     </Layout>
   )
 }
