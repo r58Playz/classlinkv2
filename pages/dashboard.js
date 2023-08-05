@@ -4,6 +4,7 @@ import fetchWithBearer, { uiHelper, app2url } from '@/lib/classlink.js';
 import { CB } from '@/components/utils.js'
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import ClampLines from 'react-clamp-lines';
 
 function AppsView({ data, alaEnabled }) {
   let [instantLoginData, setInstantLoginData] = useState(false);
@@ -67,14 +68,18 @@ function AppsView({ data, alaEnabled }) {
   return (
     <div className={styles.appsView}>
       { data.map((app) => {
-        const name = app.name;
+        let name = app.name; 
+        if(name === "Infinite Campus Student") name = "owo owo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa nasiufglufis ofigu uyr ew9 ihg"
         const icon = app.icon;
         const id = app.id;
+
         return (
           <div className={styles.app} key={name}>
             <img width="48" height="48" src={icon} alt={name} className={styles.appIcon} />
             <div className={styles.appName}>{name}</div>
+            <div className={styles.expand}></div>
             <div className={styles.appId}>{id}</div>
+            <div className={styles.expand}></div>
             {appHandler(app, alaEnabled)}
           </div>
         )
