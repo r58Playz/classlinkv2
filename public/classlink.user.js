@@ -7,7 +7,8 @@
 // @include *launchpad.classlink.com*
 // @run-at document-end
 // @inject-into page
-// @version 1.3-1
+// @version 1.6
+// @grant none
 // ==/UserScript==
 const h = window.location.hostname;
 const p = window.location.pathname;
@@ -15,11 +16,21 @@ const s = new URLSearchParams(window.location.search);
 const r = ()=>{const d = document;d.open();d.write("");d.close()};
 const dev = false;
 if(h === "classlink.r58playz.dev" || h === "localhost") {
-  window.jumpScriptInstalled = "nya~1.3~patch"; 
-} else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && !s.get("skipIntercept")) {
+  window.jumpScriptInstalled = "nya~1.6"; 
+} else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && s.get("skipIntercept")) {
+  localStorage["nyaclSkip"] = "nya";
+  const interval = setInterval(()=>{
+    if(window.location.pathname.includes("home")) {
+      localStorage["nyaclSkip"] = "nope";
+      clearInterval(interval);
+    }
+  }, 100);
+} else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("oauth") && s.get("code") && !s.get("skipIntercept") && localStorage["nyaclSkip"] !== "nya") {
   // Intercept login
   r();
   window.location=`${dev ? 'http://localhost:3000' : 'https://classlink.r58playz.dev'}/api/login/stage2?code=${s.get("code")}`
+} else if ((h === "myapps.classlink.com" || h === "stagingmyapps.classlink.com") && p.includes("home")) {
+  localStorage["nyaclSkip"] = "nope";
 } else if ((h === "launchpad.classlink.com" || h === "stagingclouddesktop.classlink.com") && p.includes("browsersso")) {
   // spoof detection for browsersso - copied straight from the extension, except with giant version
   var _div=document.createElement("div");_div.setAttribute("id","sCLExtInstalled");_div.innerText="1";_div.setAttribute("data-version","99.9");_div.style.display="none";document.body.appendChild(_div)
@@ -40,5 +51,6 @@ if(h === "classlink.r58playz.dev" || h === "localhost") {
     })
   })
   observer.observe(document.querySelector(".container"), {attributeFilter:["style"],subtree:true});
+  // or in some cases...
+  document.documentElement.addEventListener("classlink-extension-msg",(e)=>{window.location.href=(JSON.parse(e.detail)).appResponse.login_url});
 }
-
