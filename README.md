@@ -59,5 +59,6 @@ They use this shitty ass extension to track the user, every 10 fucking milliseco
 
 
 ### App Library
- - `application-autocomplete.apis.classlink.com/v1/paged/appLibrary/<id>?limit=<int>` (max 100)
+ - `application-autocomplete.apis.classlink.com/v1/paged/appLibrary/<id>?limit=<int>&subject_id=` (max 100)
  - `applications.apis.classlink.com/v1/applibrary/[un]assignApp/[id]` POST if assigning DELETE if unassigning
+ - `https://applications.apis.classlink.com/v1/applibrary/getCategories` to get the ID for #1 use a category in `enterpriseCategories`, subject_id = anything in `categorylist`
