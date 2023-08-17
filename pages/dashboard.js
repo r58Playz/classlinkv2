@@ -1,4 +1,4 @@
-import Layout from '@/components/layout.js';
+import Classlinkv2Layout from '@/components/dashboard/layout.js';
 import styles from '@/styles/dashboard.module.css';
 import fetchWithBearer, { uiHelper, app2url } from '@/lib/classlink.js';
 import { CB } from '@/components/utils.js'
@@ -247,7 +247,7 @@ export default function Dashboard({sd}) {
   })
 
   return (
-    <Layout title="Dashboard">
+    <Classlinkv2Layout title="Dashboard">
       <div className={styles.heading}>Classlinkv2</div>
       <div className={styles.subheading}>Hello {sd.name} ({sd.districtName})</div>
       <div>{sd.userName}: {sd.email}</div>
@@ -288,7 +288,7 @@ export default function Dashboard({sd}) {
         <hr />
         <NerdStats sd={sd} />
       </div>}
-    </Layout>
+    </Classlinkv2Layout>
   )
 }
 
