@@ -1,7 +1,9 @@
 # classlinkv2
 
 "LMFAO THE CODE DOESNT EXPIRE SO YOU CAN GET A TOKEN AS MANY TIMES AS YOU WANT" -r58 (i was wrong it expires in 5 minutes)
+
 "ARE THESE DEVS FUCKING MENTAL WHO THE FUCK USES A FUCKING SPRITESHEET FOR ICONS IN A FUCKING WEB APP" -r58
+
 "what if i spam the analytics launch apis" -r58
 
 ### gist of how to launch an app:
