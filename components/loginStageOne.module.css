@@ -1,5 +1,5 @@
 .container {
-  background-color: var(--login-ui-bg);
+  background-color: var(--ctp-flavor-mantle);
   padding: 2em;
   border-radius: 1em;
 }
@@ -16,19 +16,19 @@
 }
 
 .notInstalled {
-  color: var(--login-script-notinstalled);
+  color: var(--ctp-flavor-red);
 }
 
 .installed {
-  color: var(--login-script-installed);
+  color: var(--ctp-flavor-green);
 }
 
 .outOfDate {
-  color: var(--login-script-outofdate);
+  color: var(--ctp-flavor-yellow);
 }
 
 .detecting {
-  color: var(--note-fg);
+  color: var(--ctp-flavor-yellow);
 }
 
 .bold {
@@ -36,7 +36,7 @@
 }
 
 .tile {
-  background-color: var(--inline-code-bg-color);
+  background-color: var(--ctp-flavor-surface0);
   padding: 0.5em;
   display: inline-block;
   margin: 0.25em;
@@ -45,15 +45,15 @@
 
 .saveRedirect {
   padding: 1em;
-  background-color: var(--save-redirect-bg);
+  background-color: var(--ctp-flavor-surface0);
   border-radius: 8px;
   display: flex;
   flex-direction: row;
 }
 
 .saveRedirect > input {
-  color: var(--fg-color);
-  background-color: var(--save-redirect-input-bg);
+  color: var(--ctp-flavor-text) !important;
+  background-color: var(--ctp-flavor-surface1);
   border: none;
   height: 3em;
   margin-right: 1em;
@@ -64,13 +64,13 @@
 }
 
 .saveRedirect > input::placeholder {
-  color: var(--fg-color);
+  color: var(--ctp-flavor-text);
 }
 
 .saveRedirect > button {
-  background-color: var(--save-redirect-input-bg);
+  background-color: var(--ctp-flavor-surface1);
   border: none;
-  color: var(--fg-color);
+  color: var(--ctp-flavor-text);
   font-family: var(--font);
   border-radius: 8px;
   padding: 0 1em;
@@ -82,7 +82,7 @@
   margin-top: 1em;
   border: none;
   border-radius: 1em;
-  background-color: var(--save-redirect-bg);
-  color: var(--fg-color);
+  background-color: var(--ctp-flavor-surface0);
+  color: var(--ctp-flavor-text);
   font-family: var(--font);
 }

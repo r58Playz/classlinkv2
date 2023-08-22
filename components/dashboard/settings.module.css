@@ -1,0 +1,51 @@
+.medheading {
+  font-size: 28px;
+}
+
+.classlinkButton {
+  height: 3em;
+  background-color: var(--ctp-flavor-surface0);
+  border-radius: 8px;
+  width: 100%;
+  color: var(--fg-color);
+  font-family: var(--ctp-flavor-text);
+  border: none;
+  flex: 1 1;
+  padding: 0 1em;
+}
+.classlinkButton:hover {
+  background-color: var(--ctp-flavor-surface1);
+}
+.classlinkButton:active {
+  background-color: var(--ctp-flavor-surface2);
+}
+.classlinkButton:disabled {
+  background-color: var(--ctp-flavor-mantle) !important;
+}
+
+.flexBtns {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1em;
+  align-items: center;
+}
+
+.flexBtns span {
+  flex: 0 0;
+}
+
+.expand {
+  flex: 9 0;
+}
+
+.inputEl {
+  color: var(--ctp-flavor-text);
+  background-color: var(--ctp-flavor-surface0);
+  border: none;
+  height: 3em;
+  padding-left: 1em;
+  border-radius: 8px;
+  font-family: var(--font);
+}
+
+.inputEl::placeholder {color: var(--ctp-flavor-text)}

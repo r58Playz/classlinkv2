@@ -1,16 +1,12 @@
 import fetchWithBearer, { uiHelper } from '@/lib/classlink.js';
-import Layout from '@/components/layout.js';
+import Classlinkv2Layout from '@/components/dashboard/layout.js';
 import styles from '@/styles/anal.module.css';
 import Link from 'next/link';
 
 export default function Anal({sd}) {
   return (
-    <Layout title="Analytics">
-      <div className={styles.heading}>Classlinkv2 Analytics</div>
-      <div className={styles.subheading}>Hello {sd.name} ({sd.districtName})</div>
-      <div>{sd.userName}: {sd.email}</div>
-      <div className={styles.margin}></div>
-      <Link href="/dashboard" className={styles.classlinkLink}>Return to Classlinkv2</Link>
+    <Classlinkv2Layout title="Analytics">
+      <div className={styles.heading}>Analytics</div>
       <p className={styles.note}>
         Note: The IP associated to the analytics is going to be that of a data center, since Classlinkv2 proxies analytics data.
       </p>
@@ -81,7 +77,7 @@ export default function Anal({sd}) {
           })}
         </ul>
       </ul>
-    </Layout>
+    </Classlinkv2Layout>
   )
 }
 
@@ -97,10 +93,6 @@ export async function getServerSideProps({ req, res }) {
     const lastApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps?limit=10"); 
     const recordApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01");
     return {
-      name: `${userData.FirstName} ${userData.LastName}`,
-      userName: userData.DisplayName,
-      districtName: userData.Tenant,
-      email: userData.Email,
       lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins,
       lastApps, recordApps
     };

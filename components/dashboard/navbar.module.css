@@ -15,7 +15,7 @@
   color: var(--ctp-flavor-text);
 }
 
-.navitem#selected {color: var(--ctp-flavor-accent)}
+.selected {color: var(--ctp-flavor-accent)}
 
 .navitem:hover {background-color: var(--ctp-flavor-surface1)}
 

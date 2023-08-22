@@ -1,6 +1,6 @@
 .themeButton {
-  background-color: var(--theme-cycler-bg-color);
-  color: var(--fg-color);
+  background-color: var(--ctp-flavor-surface2);
+  color: var(--ctp-flavor-text);
   font-family: "Roboto Mono", monospace;
   padding: 1em 2em;
   border: none;

@@ -7,7 +7,6 @@ import { useRouter } from 'next/router';
 import jumpScriptVersion from './utils.js';
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: "font" });
-export robotoMono;
 
 const siteTitle = "Classlinkv2";
 

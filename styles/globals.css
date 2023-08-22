@@ -1,6 +1,5 @@
 :root {
   --ctp-flavor-accent: var(--ctp-flavor-mauve);
-  --theme-cycler-bg-color: var(--ctp-flavor-overlay0);
 
   --nprogress-color: var(--ctp-flavor-maroon);
   --nprogress-accent-color: var(--ctp-flavor-peach);
@@ -16,6 +15,7 @@ body,
   padding: 0;
   margin: 0;
   height: 100%;
+  background: var(--ctp-flavor-base);
 }
 
 a {

@@ -33,7 +33,6 @@ export default function Layout({ title, children }) {
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{t}</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,1,200" />
       </Head>
       <Navbar className={styles.navbar} />
       {!redirecting && <div className={styles.content} children={children}></div>}

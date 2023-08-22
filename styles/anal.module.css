@@ -12,94 +12,22 @@
 }
 
 .note {
-  color: var(--note-fg);
+  color: var(--ctp-flavor-yellow);
 }
 
 .margin {
   margin: 1em;
 }
 
-.classlinkButton {
-  height: 3em;
-  background-color: var(--app-view-bg);
-  border-radius: 8px;
-  width: 100%;
-  color: var(--fg-color);
-  font-family: var(--font);
-  border: none;
-  flex: 1 1;
-  padding: 0 1em;
-}
-.classlinkButton:hover {
-  background-color: var(--app-bg);
-}
-.classlinkButton:active {
-  background-color: var(--app-bg);
-}
-.classlinkButton:disabled {
-  background-color: var(--app-button) !important;
-}
-
-.classlinkLink {
-  height: 3em;
-  background-color: var(--app-view-bg);
-  border-radius: 8px;
-  color: var(--fg-color);
-  font-family: var(--font);
-  border: none;
-  flex: 1 1;
-  padding: 0.125em 1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-.classlinkLink:hover {
-  background-color: var(--app-bg);
-  text-decoration: none;
-  cursor: pointer !important;
-}
-.classlinkLink:active {
-  background-color: var(--app-bg);
-  text-decoration: none;
-  cursor: pointer !important;
-}
-.classlinkLinkDisabled {
-  background-color: var(--app-button) !important;
-  pointer-events: none;
-}
-
-.flexBtns {
-  display: flex;
-  flex-direction: row;
-  column-gap: 1em;
-  align-items: center;
-}
-
-.flexBtns span {
-  flex: 0 0;
-}
-
 .expand {
   flex: 9 0;
-}
-
-.inputEl {
-  color: var(--fg-color);
-  background-color: var(--app-view-bg);
-  border: none;
-  height: 3em;
-  margin-right: 1em;
-  padding-left: 1em;
-  border-radius: 8px;
-  font-family: var(--font);
 }
 
 .lastLoginsView {
   display: flex;
   flex-direction: column;
   padding: 1em;
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-mantle);
   margin: 1em 0;
   border-radius: 16px;
   row-gap: 1em;
@@ -109,7 +37,7 @@
   display: flex;
   flex-direction: row;
   padding: 1em;
-  background-color: var(--app-bg);
+  background-color: var(--ctp-flavor-crust);
   border-radius: 8px;
 }
 

@@ -1,18 +1,14 @@
 import fetchWithBearer, { uiHelper, fetchWithGws } from '@/lib/classlink.js';
-import Layout from '@/components/layout.js';
+import Classlinkv2Layout from '@/components/dashboard/layout.js';
 import styles from '@/styles/backpack.module.css';
 import Link from 'next/link';
 
 export default function Backpack({sd}) {
   return (
-    <Layout title="Backpack">
+    <Classlinkv2Layout title="Backpack">
       <div>
-        <div className={styles.heading}>Classlinkv2 Backpack</div>
-        <div className={styles.subheading}>Hello {sd.name} ({sd.districtName})</div>
-        <div>{sd.userName}: {sd.email}</div>
-        <div className={styles.margin}></div>
+        <div className={styles.heading}>Backpack</div>
         {sd.backpackData.enableStudentbackpack!=="1"?<p className={styles.note}>WARNING: Backpack has been disabled by admin. You are not supposed to see this info, but the APIs are still accessible.</p>:""}
-        <Link href="/dashboard" className={styles.classlinkLink}>Return to Classlinkv2</Link>
         <hr />
         <div className={styles.medheading}>School Year Info</div>
         <p>
@@ -31,7 +27,7 @@ export default function Backpack({sd}) {
         <div className={styles.classView}>
           {sd.classesData.map((classData)=>{
             return (
-              <Link href={`/class/${classData.sourcedId}`} key={classData.sourcedId} className={styles.classItem}>
+              <Link href={`/dashboard/class/${classData.sourcedId}`} key={classData.sourcedId} className={styles.classItem}>
                 <span>{classData.title}</span>
                 <div className={styles.expand}></div>
                 <span>{classData.teachers.length ? classData.teachers.map(d=>d.familyName).join(', ') : "No Teachers"}</span>
@@ -40,16 +36,15 @@ export default function Backpack({sd}) {
           })}
         </div>
       </div>
-    </Layout>
+    </Classlinkv2Layout>
   )
 }
 
 export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
-    const userData = data.userData;
     const backpackData = await fetchWithBearer("https://nodeapi.classlink.com/tenant/customization/backpack", data.cookies.t).then(r=>r.json());
     const schoolyearData = await fetchWithGws("https://analytics-data.classlink.io/teacherConsole/v1p0/schoolyear", data.cookies.g).then(r=>r.json());
     const classesData = await fetchWithBearer("https://myclasses.apis.classlink.com/v1/classes", data.cookies.t).then(r=>r.json());
-    return { name: `${userData.FirstName} ${userData.LastName}`, userName: userData.DisplayName, districtName: userData.Tenant, email: userData.Email, backpackData, schoolyearData, classesData }
+    return { backpackData, schoolyearData, classesData }
   });
 } 

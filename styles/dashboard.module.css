@@ -12,7 +12,7 @@
 }
 
 .note {
-  color: var(--note-fg);
+  color: var(--ctp-flavor-yellow);
 }
 
 .appsView {
@@ -24,7 +24,7 @@
   grid-row-gap: 1em;
   grid-template-columns: repeat(auto-fill, 192px);
   grid-column-gap: 1em;
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-mantle);
   justify-content: space-between;
 }
 
@@ -32,7 +32,7 @@
   margin-top: 1em;
   border-radius: 32px;
   padding: 1em;
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-mantle);
 }
 
 .instantLoginHeader {
@@ -41,7 +41,7 @@
 }
 
 .app {
-  background-color: var(--app-bg);
+  background-color: var(--ctp-flavor-crust);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
@@ -73,73 +73,44 @@
 
 .appLogIn {
   height: 32px;
-  background-color: var(--app-button);
+  background-color: var(--ctp-flavor-surface0);
   border-radius: 8px;
   width: calc(100% - 16px);
   border: none;
-  color: var(--fg-color);
+  color: var(--ctp-flavor-text);
   margin-bottom: 8px;
   font-family: var(--font);
 }
 
 .appLogIn:hover {
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-surface1);
 }
 
 .appLogIn:active {
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-surface2);
 }
 
 
 .classlinkButton {
   height: 3em;
-  background-color: var(--app-view-bg);
+  background-color: var(--ctp-flavor-surface0);
   border-radius: 8px;
   width: 100%;
-  color: var(--fg-color);
+  color: var(--ctp-flavor-text);
   font-family: var(--font);
   border: none;
   flex: 1 1;
   padding: 0 1em;
 }
 .classlinkButton:hover {
-  background-color: var(--app-bg);
+  background-color: var(--ctp-flavor-surface1);
 }
 .classlinkButton:active {
-  background-color: var(--app-bg);
+  background-color: var(--ctp-flavor-surface2);
 }
 .classlinkButton:disabled {
-  background-color: var(--app-button) !important;
-}
-
-.classlinkLink {
-  height: 3em;
-  background-color: var(--app-view-bg);
-  border-radius: 8px;
-  width: 100%;
-  color: var(--fg-color);
-  font-family: var(--font);
-  border: none;
-  flex: 1 1;
-  padding: 0.125em 1em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-}
-.classlinkLink:hover {
-  background-color: var(--app-bg);
-  text-decoration: none;
-  cursor: pointer !important;
-}
-.classlinkLink:active {
-  background-color: var(--app-bg);
-  text-decoration: none;
-  cursor: pointer !important;
-}
-.classlinkLinkDisabled {
-  background-color: var(--app-button) !important;
-  pointer-events: none;
+  background-color: var(--ctp-flavor-base) !important;
+  border: 1px solid var(--ctp-flavor-surface2);
 }
 
 .flexBtns {
@@ -157,12 +128,3 @@
   flex: 9 0;
 }
 
-.inputEl {
-  color: var(--fg-color);
-  background-color: var(--app-view-bg);
-  border: none;
-  height: 3em;
-  padding-left: 1em;
-  border-radius: 8px;
-  font-family: var(--font);
-}

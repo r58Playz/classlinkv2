@@ -1,22 +1,12 @@
-import Layout from '@/components/layout.js';
+import Classlinkv2Layout from '@/components/dashboard/layout.js';
 import fetchWithBearer, { uiHelper } from '@/lib/classlink.js';
 import styles from '@/styles/class.module.css';
 import Link from 'next/link';
 
 export default function Class({ id, sd }) {
   return (
-    <Layout title={sd.classData.title}>
-      <div className={styles.heading}>Classlinkv2 Backpack: {sd.classData.title}</div>
-      <div className={styles.subheading}>Hello {sd.name} ({sd.districtName})</div>
-      <div>{sd.userName}: {sd.email}</div>
-      <div className={styles.margin}></div>
-      Return to:
-      <div class={styles.flexBtns}>
-        <Link href="/dashboard" className={styles.classlinkLink}>Classlinkv2</Link>
-        <Link href="/backpack" className={styles.classlinkLink}>Backpack</Link>
-      </div>
-      <hr />
-      <div className={styles.medheading}>Class Info</div>
+    <Classlinkv2Layout title={sd.classData.title}>
+      <div className={styles.heading}>{sd.classData.title}</div>
       <p>
         Teachers:
       </p>
@@ -46,22 +36,17 @@ export default function Class({ id, sd }) {
           )
         })}
       </div>
-    </Layout>
+    </Classlinkv2Layout>
   )
 }
 
 export async function getServerSideProps({ params, req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const id = params.id;
-    const userData = data.userData;
     const classData = await fetchWithBearer("https://myclasses.apis.classlink.com/v1/classes/"+id, data.cookies.t);
-    if(classData.status!==200) return {redirect: {permanent: false, destination: "/backpack"}}
+    if(classData.status!==200) return {redirect: {permanent: false, destination: "/dashboard/backpack"}}
     const classDataJson = await classData.json();
     return {
-      name: `${userData.FirstName} ${userData.LastName}`,
-      userName: userData.DisplayName,
-      districtName: userData.Tenant,
-      email: userData.Email,
       classData: classDataJson,
     };
   })
