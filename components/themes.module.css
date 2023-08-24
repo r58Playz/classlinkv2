@@ -1,12 +1,10 @@
 .themeButton {
   background-color: var(--ctp-flavor-surface2);
   color: var(--ctp-flavor-text);
-  font-family: "Roboto Mono", monospace;
-  padding: 1em 2em;
+  font-family: var(--font);
+  padding: 1em;
   border: none;
-  position: fixed;
-  bottom: 0.5em;
-  right: 0.5em;
   z-index: 1;
-  border-radius: 0.5em;
+  border-radius: 8px;
+  margin-top: 1em;
 }
