@@ -85,13 +85,15 @@ export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const jf = async (url)=>{return await fetchWithBearer(url, data.cookies.t).then(r=>r.json())}
     const userData = data.userData;
-    const lastLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins?limit=10"); 
-    const dailyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/daily");
-    const weeklyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/weekly");
-    const monthlyLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/monthly");
-    const recordLogins = await jf("https://analytics-data.classlink.io/my/v1p0/logins/records");
-    const lastApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps?limit=10"); 
-    const recordApps = await jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01");
+    const [lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins, lastApps, recordApps] = await Promise.all([
+      jf("https://analytics-data.classlink.io/my/v1p0/logins?limit=10"), 
+      jf("https://analytics-data.classlink.io/my/v1p0/logins/daily"),
+      jf("https://analytics-data.classlink.io/my/v1p0/logins/weekly"),
+      jf("https://analytics-data.classlink.io/my/v1p0/logins/monthly"),
+      jf("https://analytics-data.classlink.io/my/v1p0/logins/records"),
+      jf("https://analytics-data.classlink.io/my/v1p0/apps?limit=10"), 
+      jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01")
+    ]);
     return {
       lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins,
       lastApps, recordApps
