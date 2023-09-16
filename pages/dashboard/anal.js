@@ -85,6 +85,7 @@ export async function getServerSideProps({ req, res }) {
   return await uiHelper(req, res, {}, async (req, res, data) => {
     const jf = async (url)=>{return await fetchWithBearer(url, data.cookies.t).then(r=>r.json())}
     const userData = data.userData;
+    // thanks @wearrrrr
     const [lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins, lastApps, recordApps] = await Promise.all([
       jf("https://analytics-data.classlink.io/my/v1p0/logins?limit=10"), 
       jf("https://analytics-data.classlink.io/my/v1p0/logins/daily"),
