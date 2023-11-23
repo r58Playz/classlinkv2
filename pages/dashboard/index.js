@@ -13,7 +13,7 @@ function AppsView({ data, alaEnabled }) {
   const appHandler = (app, alaEnabled) => {
     const url = app2url(app);
     if(url !== null) {
-      return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+id)};urlHandler(url)}} className={styles.appLogIn}>Log In</button>
+      return <button onClick={()=>{if(alaEnabled){fetch("/api/clAnal/ala?id="+app.id)};urlHandler(url)}} className={styles.appLogIn}>Log In</button>
     } else {
       return <button disabled className={styles.appLogIn}>Unsupported</button>
     }
