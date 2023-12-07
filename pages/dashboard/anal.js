@@ -44,39 +44,12 @@ export default function Anal({sd}) {
           return (
             <div key={app.Date} className={styles.lastLogin}>
               <span>{app.AppName} ({app.AppId})</span>
-              <div class={styles.expand}></div>
+              <div className={styles.expand}></div>
               <span>{app.Date}</span>
             </div>
           )
         })}
       </div>
-      <div className={styles.medheading}>Other data</div>
-      <ul>
-        <li>Daily logins:</li>
-        <ul>
-          {sd.dailyLogins.map((data)=>{
-            return (
-              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
-            )
-          })}
-        </ul>
-        <li>Weekly logins:</li>
-        <ul>
-          {sd.weeklyLogins.map((data)=>{
-            return (
-              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
-            )
-          })}
-        </ul>
-        <li>Monthly logins:</li>
-        <ul>
-          {sd.monthlyLogins.map((data)=>{
-            return (
-              <li key={data.Date}>{data.Date}: {data.Logins.toLocaleString()}</li>
-            )
-          })}
-        </ul>
-      </ul>
     </Classlinkv2Layout>
   )
 }
@@ -86,17 +59,14 @@ export async function getServerSideProps({ req, res }) {
     const jf = async (url)=>{return await fetchWithBearer(url, data.cookies.t).then(r=>r.json())}
     const userData = data.userData;
     // thanks @wearrrrr
-    const [lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins, lastApps, recordApps] = await Promise.all([
+    const [lastLogins, recordLogins, lastApps, recordApps] = await Promise.all([
       jf("https://analytics-data.classlink.io/my/v1p0/logins?limit=10"), 
-      jf("https://analytics-data.classlink.io/my/v1p0/logins/daily"),
-      jf("https://analytics-data.classlink.io/my/v1p0/logins/weekly"),
-      jf("https://analytics-data.classlink.io/my/v1p0/logins/monthly"),
       jf("https://analytics-data.classlink.io/my/v1p0/logins/records"),
       jf("https://analytics-data.classlink.io/my/v1p0/apps?limit=10"), 
       jf("https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01")
     ]);
     return {
-      lastLogins, dailyLogins, weeklyLogins, monthlyLogins, recordLogins,
+      lastLogins, recordLogins,
       lastApps, recordApps
     };
   });
