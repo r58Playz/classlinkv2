@@ -1,8 +1,14 @@
-export let settings = $store(
+export let settings: Stateful<{
+	lastLoginStep: string,
+	lastJumpScriptMethod: boolean,
+	wispServer: string,
+	starredApps: number[],
+}> = $store(
 	{
 		lastLoginStep: "wisp",
 		lastJumpScriptMethod: false,
 		wispServer: "wss://wisp-server-workers.r58playz.workers.dev",
+		starredApps: [],
 	},
 	{ ident: "classlinkv2-settings", backing: "localstorage", autosave: "auto" },
 );

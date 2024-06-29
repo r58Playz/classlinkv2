@@ -1,5 +1,5 @@
 import epoxy_wasm from "@mercuryworkshop/epoxy-tls/pkg/epoxy-module";
-import { settings } from "./store";
+import { settings, tokens } from "./store";
 
 const EPOXY_PATH = "/epoxy/epoxy.wasm";
 const CERTS_PATH = "/epoxy/certs.js";
@@ -35,13 +35,40 @@ export async function createEpoxy() {
 	currentClient = new epoxy_wasm.EpoxyClient(settings.wispServer, certs, options);
 }
 
-export async function fetch(url: string, options?: any) {
+export async function fetch(url: string, options?: any, retried?: boolean) {
 	if (!certs) {
 		await instantiateEpoxy();
 	}
 	if (currentWispUrl !== settings.wispServer) {
 		await createEpoxy();
 	}
-	// @ts-ignore
-	return currentClient.fetch(url, options);
+	try {
+		// @ts-ignore
+		return await currentClient.fetch(url, options);
+	} catch(err) {
+		if (retried) {
+			throw err;
+		}
+		console.log(err);
+
+		if ((err as Error).message.includes("UnexpectedEof")) {
+			// retriable, some wisp-server-workers issue?
+			// @ts-ignore
+			await currentClient.replace_stream_provider();
+			await new Promise(r=>setTimeout(r, 500));
+			return await fetch(url, options, true);
+		}
+	}
+}
+
+export async function fetchBearer(url: string, maybeOptions?: any) {
+	let options = maybeOptions || {};
+	options.headers = Object.assign(options.headers || {}, { "Authorization": "Bearer " + tokens.token });
+	return await fetch(url, options);
+}
+
+export async function fetchGws(url: string, maybeOptions?: any) {
+	let options = maybeOptions || {};
+	options.headers = Object.assign(options.headers || {}, { "Authorization": "gws " + tokens.gws });
+	return await fetch(url, options);
 }
