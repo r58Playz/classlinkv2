@@ -15,8 +15,8 @@ importers:
         specifier: 2.0.0-2
         version: 2.0.0-2
       dreamland:
-        specifier: link:../dreamlandjs
-        version: link:../dreamlandjs
+        specifier: https://github.com/mercuryworkshop/dreamlandjs.git
+        version: https://codeload.github.com/mercuryworkshop/dreamlandjs/tar.gz/1a9d03969ca2765a88aee70e9180bfa4ed22dd41
       dreamland-router:
         specifier: https://github.com/mercuryworkshop/dreamland-router.git#r58
         version: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948
@@ -313,6 +313,10 @@ packages:
   dreamland-router@https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948:
     resolution: {tarball: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948}
     version: 1.0.1
+
+  dreamland@https://codeload.github.com/mercuryworkshop/dreamlandjs/tar.gz/1a9d03969ca2765a88aee70e9180bfa4ed22dd41:
+    resolution: {tarball: https://codeload.github.com/mercuryworkshop/dreamlandjs/tar.gz/1a9d03969ca2765a88aee70e9180bfa4ed22dd41}
+    version: 0.0.23-pre
 
   esbuild@0.21.5:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
@@ -699,6 +703,8 @@ snapshots:
   commondir@1.0.1: {}
 
   dreamland-router@https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948: {}
+
+  dreamland@https://codeload.github.com/mercuryworkshop/dreamlandjs/tar.gz/1a9d03969ca2765a88aee70e9180bfa4ed22dd41: {}
 
   esbuild@0.21.5:
     optionalDependencies:
