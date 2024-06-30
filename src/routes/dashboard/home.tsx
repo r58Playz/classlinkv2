@@ -94,6 +94,13 @@ const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: a
 			grid-auto-rows: auto;
 			grid-template-columns: repeat(auto-fill, 20em)
 		}
+
+		@media (max-width: 37.5rem) {
+			.applications {
+				display: flex;
+				flex-direction: column;
+			}
+		}
 	`;
 
 	this.mount = async () => {

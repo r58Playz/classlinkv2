@@ -11,5 +11,11 @@ export default defineConfig({
 				{ src: "node_modules/@mercuryworkshop/epoxy-tls/pkg/certs.js", dest: "epoxy" }
 			]
 		})
-	]
+	],
+	server: {
+		headers: {
+			"Cross-Origin-Opener-Policy": "same-origin",
+			"Cross-Origin-Embedder-Policy": "credentialless",
+		}
+	}
 });

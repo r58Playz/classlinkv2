@@ -5,6 +5,10 @@ import iconHome from "@ktibow/iconset-material-symbols/home";
 import iconHomeOutline from "@ktibow/iconset-material-symbols/home-outline";
 import iconSchool from "@ktibow/iconset-material-symbols/school";
 import iconSchoolOutline from "@ktibow/iconset-material-symbols/school-outline";
+import iconInsertChart from "@ktibow/iconset-material-symbols/insert-chart";
+import iconInsertChartOutline from "@ktibow/iconset-material-symbols/insert-chart-outline";
+import iconSettings from "@ktibow/iconset-material-symbols/settings";
+import iconSettingsOutline from "@ktibow/iconset-material-symbols/settings-outline";
 import { Router } from "../../router";
 
 const Layout: Component<{ loading: boolean }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[] }> = function() {
@@ -86,6 +90,18 @@ const Layout: Component<{ loading: boolean }, { routes: { path: string, sicon: I
 			icon: iconSchoolOutline,
 			sicon: iconSchool,
 			label: "Classes",
+		},
+		{
+			path: "/dashboard/analytics",
+			icon: iconInsertChartOutline,
+			sicon: iconInsertChart,
+			label: "Analytics",
+		},
+		{
+			path: "/dashboard/settings",
+			icon: iconSettingsOutline,
+			sicon: iconSettings,
+			label: "Settings",
 		}
 	];
 
@@ -94,7 +110,7 @@ const Layout: Component<{ loading: boolean }, { routes: { path: string, sicon: I
 	return (
 		<div class={cssClass}>
 			<div class="DashboardLayout-navbar">
-				<NavList>
+				<NavList type="auto">
 					<div class="DashboardLayout-items">
 						{this.routes.map(x => {
 							return (
