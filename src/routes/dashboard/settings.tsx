@@ -1,7 +1,8 @@
 import iconLink from "@ktibow/iconset-material-symbols/link";
 import { fetch, createEpoxy } from "../../epoxy";
 import Layout from "./layout"
-import { TextField, Card, Button } from "m3-dreamland";
+// @ts-ignore
+import { TextField, Card, Button, argbFromHex, genScheme, sourceColorFromImage, hexFromArgb } from "m3-dreamland";
 import { settings } from "../../store";
 import { Router } from "../../router";
 
@@ -37,7 +38,7 @@ const WispTestCard: Component<{}, { res: Response | undefined, body: string | un
 					<div>
 						<div class="m3-font-title-medium">Response</div>
 						<code>{res.status} {res.statusText}</code>
-						{Object.entries(res.rawHeaders).map(([k, v]) => <code>{k}: {v}</code>)}
+						{Object.entries((res as any).rawHeaders).map(([k, v]) => <code>{k}: {v}</code>)}
 						<br />
 						<code>{use(this.body)}</code>
 					</div> : null
@@ -115,6 +116,94 @@ export const WispSettings: Component<{}, {}> = function() {
 	)
 }
 
+const transformContrast = function(contrast: number): number {
+	return contrast == 0
+		? -0.5
+		: contrast == 1
+			? 0
+			: contrast == 2
+				? 6 / 12
+				: contrast == 3
+					? 8 / 12
+					: contrast == 4
+						? 10 / 12
+						: contrast == 5
+							? 11 / 12
+							: 1
+}
+
+export const MaterialSettings: Component<{}, { colorSelector: HTMLElement, fileSelector: HTMLInputElement }> = function() {
+	const schemes = ["tonal_spot", "content", "fidelity", "vibrant", "expressive", "neutral", "monochrome"];
+	useChange([settings.themeScheme, settings.themeColor, settings.themeContrast], () => {
+		const { light, dark } = genScheme(schemes[settings.themeScheme], transformContrast(settings.themeContrast), argbFromHex(settings.themeColor));
+		settings.lightTheme = light;
+		settings.darkTheme = dark;
+	});
+
+	this.css = `
+		.picker {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.picker input {
+			visibility: hidden;	
+			width: 0;
+			height: 0;
+		}
+
+		.buttons {
+			display: flex;
+			gap: 1em;
+		}
+
+		.titlecase {
+			text-transform: capitalize;
+		}
+
+		@media (max-width: 630px) {
+			.buttons {
+				flex-direction: column;
+				align-items: center;
+			}
+		}
+	`;
+
+	return (
+		<div>
+			<Card type="filled">
+				<div class="buttons">
+					<div class="picker">
+						<Button type="tonal" on:click={() => { this.colorSelector.click(); }}>Color: {use(settings.themeColor, x => x.toUpperCase())}</Button>
+						<input type="color" bind:value={use(settings.themeColor)} bind:this={use(this.colorSelector)} />
+					</div>
+					<div class="picker">
+						<Button type="tonal" on:click={() => { this.fileSelector.click(); }}>Get color from image</Button>
+						<input type="file" accept="image/*" bind:this={use(this.fileSelector)} on:change={() => {
+							if (!this.fileSelector.files) return;
+							const reader = new FileReader();
+							reader.onload = async () => {
+								const image = new Image();
+								image.src = String(reader.result);
+								settings.themeColor = hexFromArgb(await sourceColorFromImage(image));
+							};
+							reader.readAsDataURL(this.fileSelector.files[0]);
+						}} />
+					</div>
+					<Button type="tonal" on:click={() => { settings.themeScheme = (settings.themeScheme + 1) % 7 }}>
+						<span class="titlecase">
+							Scheme: {use(settings.themeScheme, x => schemes[x].replace("_", " "))}
+						</span>
+					</Button>
+					<Button type="tonal" on:click={() => { settings.themeContrast = (settings.themeContrast + 1) % 7 }}>
+						Contrast: {use(settings.themeContrast, x => x + 1)}
+					</Button>
+				</div>
+			</Card>
+		</div>
+	)
+}
+
 export const Settings: Component<{}, {}> = function() {
 	this.css = `
 		.buttons {
@@ -134,11 +223,13 @@ export const Settings: Component<{}, {}> = function() {
 			<Layout loading={false}>
 				<h1 class="m3-font-headline-medium">Settings</h1>
 				<div class="buttons">
-					<Button type="tonal" on:click={()=>{delete localStorage["classlinkv2-tokens"]; Router.route("/");}}>Log out</Button>
-					<Button type="tonal" on:click={()=>{settings.starredApps = [];}}>Clear starred apps</Button>
+					<Button type="tonal" on:click={() => { delete localStorage["classlinkv2-tokens"]; Router.route("/"); }}>Log out</Button>
+					<Button type="tonal" on:click={() => { settings.starredApps = []; }}>Clear starred apps</Button>
 				</div>
 				<h2 class="m3-font-title-large">Wisp</h2>
 				<WispSettings />
+				<h2 class="m3-font-title-large">Material UI</h2>
+				<MaterialSettings />
 			</Layout>
 		</div>
 	)

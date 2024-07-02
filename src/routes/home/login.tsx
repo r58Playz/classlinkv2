@@ -1,5 +1,6 @@
-import { Tabs, SegmentedButtonContainer, SegmentedButtonItem, Card, ButtonLink } from "m3-dreamland";
 import { settings } from "../../store";
+// @ts-ignore
+import { Tabs, SegmentedButtonContainer, SegmentedButtonItem, Card, ButtonLink } from "m3-dreamland";
 
 import iconDns from "@ktibow/iconset-material-symbols/dns";
 import iconCodeBlocks from "@ktibow/iconset-material-symbols/code-blocks";

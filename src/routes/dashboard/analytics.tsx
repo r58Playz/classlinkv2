@@ -1,5 +1,6 @@
 import { fetchBearer } from "../../epoxy";
 import Layout from "./layout";
+// @ts-ignore
 import { Card } from "m3-dreamland";
 
 export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRecords: any, apps: any, appRecords: any }> = function() {
@@ -47,7 +48,7 @@ export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRec
 				<div>Yearly: {use(this.loginRecords.yearly.Logins)} logins starting on {use(this.loginRecords.yearly.startDate)} and ending on {use(this.loginRecords.yearly.endDate)}</div>
 				<h2 class="m3-font-title-large">App Logins</h2>
 				<div class="list">
-					{use(this.apps, x => x.map(x => {
+					{use(this.apps, x => x.map((x: any) => {
 						return (
 							<Card type="elevated">
 								<div>{x.AppName} ({x.AppId}) on {x.Date}</div>
@@ -58,7 +59,7 @@ export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRec
 				</div>
 				<h2 class="m3-font-title-large">App Login Records</h2>
 				<div class="list">
-					{use(this.appRecords, x => x.map(x => {
+					{use(this.appRecords, x => x.map((x: any) => {
 						return (
 							<Card type="elevated">
 								<div>{x.AppName} ({x.AppId}): {x.Count} logins, {x.activeS} active seconds</div>

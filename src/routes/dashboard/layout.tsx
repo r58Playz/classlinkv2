@@ -1,5 +1,6 @@
-import { NavList, NavListButton, LinearProgressIndeterminate } from "m3-dreamland";
 import type { IconifyIcon } from "@iconify/types";
+// @ts-ignore
+import { NavList, NavListButton, LinearProgressIndeterminate } from "m3-dreamland";
 
 import iconHome from "@ktibow/iconset-material-symbols/home";
 import iconHomeOutline from "@ktibow/iconset-material-symbols/home-outline";
@@ -11,7 +12,7 @@ import iconSettings from "@ktibow/iconset-material-symbols/settings";
 import iconSettingsOutline from "@ktibow/iconset-material-symbols/settings-outline";
 import { Router } from "../../router";
 
-const Layout: Component<{ loading: boolean }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[] }> = function() {
+const Layout: Component<{ "bind:loading"?: DLPointer<boolean>, loading?: boolean }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[] }> = function() {
 	const cssClass = css`
 		display: flex;
 		min-height: 100vh;
@@ -127,7 +128,7 @@ const Layout: Component<{ loading: boolean }, { routes: { path: string, sicon: I
 				</NavList>
 			</div>
 			<div class="DashboardLayout-content">
-				{$if(use(this.loading), <div class="DashboardLayout-loading">Fetching data<LinearProgressIndeterminate /></div>, this.children)}
+				{$if(use(this.loading), <div class="DashboardLayout-loading">Fetching data<LinearProgressIndeterminate /></div>, <div>{this.children}</div>)}
 			</div>
 		</div >
 	)

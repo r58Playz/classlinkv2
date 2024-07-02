@@ -1,5 +1,6 @@
 import { fetchBearer, fetchGws } from "../../epoxy";
 import Layout from "./layout";
+// @ts-ignore
 import { Card } from "m3-dreamland";
 
 function formatWeekends(weekends: string): string {
@@ -8,7 +9,7 @@ function formatWeekends(weekends: string): string {
 	}).join(', ')
 }
 
-const ClassTile: Component<{}, { class: any }> = function() {
+const ClassTile: Component<{ class: any }, {}> = function() {
 	this.css = `
 		h2 {
 			margin: 0;
@@ -21,7 +22,7 @@ const ClassTile: Component<{}, { class: any }> = function() {
 				<h2 class="m3-font-title-medium">{this.class.title}</h2>
 				<div class="m3-font-label-medium">{this.class.sourcedId}</div>
 				<div>Class size: {this.class.classSize}</div>
-				{this.class.teachers.map(x=>{return <div>Teacher: {x.givenName} {x.familyName} ({x.sourcedId})</div>;})}
+				{this.class.teachers.map((x: any) => { return <div>Teacher: {x.givenName} {x.familyName} ({x.sourcedId})</div>; })}
 			</Card>
 		</div>
 	);
@@ -60,7 +61,7 @@ export const Classes: Component<{}, { loaded: boolean, disabled: boolean, school
 					School year: {use(this.schoolyear, x => x.Year)} ({use(this.schoolyear, x => x.startDate)} to {use(this.schoolyear, x => x.endDate)}) {use(this.schoolyear, x => x.startHour.toString().padStart(2, "0"))}:00-{use(this.schoolyear, x => x.endHour.toString().padStart(2, "0"))}:00, weekends on {use(this.schoolyear, x => formatWeekends(x.weekend))}
 				</p>
 				<div class="classes">
-				{use(this.classes, x=>x.map(x=>{return <ClassTile class={x} />}))}
+					{use(this.classes, x => x.map((x: any) => { return <ClassTile class={x} /> }))}
 				</div>
 			</Layout>
 		</div>

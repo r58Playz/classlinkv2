@@ -1,5 +1,6 @@
-import { CardClickable, Button, Icon } from "m3-dreamland";
 import { fetch, fetchBearer } from "../../epoxy";
+// @ts-ignore
+import { CardClickable, Button, Icon } from "m3-dreamland";
 import { settings, tokens } from "../../store";
 import Layout from "./layout";
 import { Router } from "../../router";
@@ -8,7 +9,7 @@ import iconStar from "@ktibow/iconset-material-symbols/star";
 import iconStarOutline from "@ktibow/iconset-material-symbols/star-outline";
 import iconError from "@ktibow/iconset-material-symbols/error";
 
-const AppTile: Component<{ app: any, url: string | null, starred: boolean }, {}> = function() {
+const AppTile: Component<{ app: any, starred: boolean }, { url: string | null}> = function() {
 	this.css = `
 		.CardClickable-m3-container {
 			width: 100%;
@@ -63,7 +64,7 @@ const AppTile: Component<{ app: any, url: string | null, starred: boolean }, {}>
 						{!this.url ? <div class="m3-font-label-medium unsupported"><Icon icon={iconError} />Unsupported</div> : null}
 					</div>
 					<div class="action">
-						<Button type="tonal" iconType="full" on:click={(e) => {
+						<Button type="tonal" iconType="full" on:click={(e: Event) => {
 							e.stopPropagation();
 							if (this.starred) {
 								settings.starredApps = settings.starredApps.filter(x => x !== this.app.id);
@@ -127,8 +128,8 @@ const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: a
 	}
 
 	useChange([this.applications, settings.starredApps], () => {
-		this.unstarred = this.applications.filter(x => !settings.starredApps.includes(x.id));
-		this.starred = this.applications.filter(x => settings.starredApps.includes(x.id));
+		this.unstarred = this.applications.filter((x: any) => !settings.starredApps.includes(x.id));
+		this.starred = this.applications.filter((x: any) => settings.starredApps.includes(x.id));
 	});
 
 	return (
@@ -141,13 +142,13 @@ const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: a
 						<div>
 							<h2 class="m3-font-title-large">Starred</h2>
 							<div class="applications">
-								{use(this.starred, x => x.map(x => { return <AppTile app={x} starred={true} /> }))}
+								{use(this.starred, x => x.map((x: any) => { return <AppTile app={x} starred={true} /> }))}
 							</div>
 							<h2 class="m3-font-title-large">Applications</h2>
 						</div>
 					)}
 					<div class="applications">
-						{use(this.unstarred, x => x.map(x => { return <AppTile app={x} starred={false} /> }))}
+						{use(this.unstarred, x => x.map((x: any) => { return <AppTile app={x} starred={false} /> }))}
 					</div>
 				</div>
 			</Layout>
