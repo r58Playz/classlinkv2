@@ -3,7 +3,11 @@ import Login from "./home/login";
 const Home: Component<{}, {}> = function() {
 	this.css = `
 		padding: 1em;
-	`
+
+		.warning {
+			color: rgb(var(--m3-scheme-error))
+		}
+	`;
 	return (
 		<div>
 			<h1 class="m3-font-display-medium">Classlinkv2</h1>

@@ -87,10 +87,13 @@ export const WispSettings: Component<{}, {}> = function() {
 	`
 
 	const testUrl = (url: string) => {
-		if (!URL.canParse(url)) return false;
-		const parsed = new URL(url);
-		if (parsed.protocol !== "wss:") return false;
-		return true;
+		try {
+			const parsed = new URL(url);
+			if (parsed.protocol !== "wss:") return false;
+			return true;
+		} catch {
+			return false;
+		}
 	};
 
 	return (

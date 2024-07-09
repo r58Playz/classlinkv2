@@ -1,4 +1,5 @@
-import epoxy_wasm from "@mercuryworkshop/epoxy-tls/pkg/epoxy-module";
+// @ts-ignore
+import epoxy_wasm from "@mercuryworkshop/epoxy-tls/minimal-epoxy";
 import { settings, tokens } from "./store";
 
 const EPOXY_PATH = "/epoxy/epoxy.wasm";
