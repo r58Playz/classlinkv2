@@ -12,8 +12,8 @@ importers:
         specifier: ^0.0.1720072912
         version: 0.0.1720072912
       '@mercuryworkshop/epoxy-tls':
-        specifier: 2.0.5-1
-        version: 2.0.5-1
+        specifier: 2.0.8-1
+        version: 2.0.8-1
       dreamland:
         specifier: ^0.0.24
         version: 0.0.24
@@ -21,8 +21,8 @@ importers:
         specifier: github:mercuryworkshop/dreamland-router#r58
         version: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948
       m3-dreamland:
-        specifier: link:../svelte2dreamland/m3-dreamland
-        version: link:../svelte2dreamland/m3-dreamland
+        specifier: github:mercuryworkshop/m3-dreamland
+        version: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/3cb1a5a6f48058190a7d5513646183b0d0f88cb1
       vite-plugin-dreamland:
         specifier: ^1.2.1
         version: 1.2.1
@@ -183,11 +183,17 @@ packages:
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
+  '@ktibow/iconset-material-symbols@0.0.1717653083':
+    resolution: {integrity: sha512-BgBEmUTwJ6UCS4qb72ciB/JbJndnUG9sPaPqY9krai6YNsE2On7lw/uk79VSS47HXbwEGuxOE1oT2xIbNmYU6A==}
+
   '@ktibow/iconset-material-symbols@0.0.1720072912':
     resolution: {integrity: sha512-WMKz7EESIuM5IU3NkXKbsbsubJoSDcjJBQeSQGaM62YZA1JswMpalJZbFYoRD4WEVGS1XwpvzfoDlUSfWQjn6Q==}
 
-  '@mercuryworkshop/epoxy-tls@2.0.5-1':
-    resolution: {integrity: sha512-mJrauGe8Men8uohQt0DGcVUG5IcgDxRT7rnBBEfuYchvWh8ysebnwnH1fuq1YTPtXdKS1rqpRaApyoTgu15aqQ==}
+  '@material/material-color-utilities@0.3.0':
+    resolution: {integrity: sha512-ztmtTd6xwnuh2/xu+Vb01btgV8SQWYCaK56CkRK8gEkWe5TuDyBcYJ0wgkMRn+2VcE9KUmhvkz+N9GHrqw/C0g==}
+
+  '@mercuryworkshop/epoxy-tls@2.0.8-1':
+    resolution: {integrity: sha512-7HiOXaDBBjn2Vtl/DTm65AdUPCKquKTMy/aVWo8A0W4g2vNE1C4uqsmrVzdB9/w8HRImI/jaIN48LR2Uw8vD9A==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -357,6 +363,10 @@ packages:
 
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
+
+  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/3cb1a5a6f48058190a7d5513646183b0d0f88cb1:
+    resolution: {tarball: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/3cb1a5a6f48058190a7d5513646183b0d0f88cb1}
+    version: 0.0.1
 
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -532,11 +542,17 @@ snapshots:
 
   '@iconify/types@2.0.0': {}
 
+  '@ktibow/iconset-material-symbols@0.0.1717653083':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@ktibow/iconset-material-symbols@0.0.1720072912':
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@mercuryworkshop/epoxy-tls@2.0.5-1': {}
+  '@material/material-color-utilities@0.3.0': {}
+
+  '@mercuryworkshop/epoxy-tls@2.0.8-1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -701,6 +717,11 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/3cb1a5a6f48058190a7d5513646183b0d0f88cb1:
+    dependencies:
+      '@ktibow/iconset-material-symbols': 0.0.1717653083
+      '@material/material-color-utilities': 0.3.0
 
   merge2@1.4.1: {}
 
