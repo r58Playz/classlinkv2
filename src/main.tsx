@@ -8,12 +8,12 @@ import './index.css';
 import { settings } from './store';
 
 const App: Component<
-    {
-    },
-    {
+	{
+	},
+	{
 		renderRoot: HTMLElement,
-    }
-> = function () {
+	}
+> = function() {
 	this.mount = () => {
 		Router.render(this.renderRoot);
 	};
@@ -29,5 +29,9 @@ const App: Component<
 };
 
 window.addEventListener('load', () => {
-    document.getElementById('app')!.replaceWith(<App />);
+	try {
+		document.getElementById('app')!.replaceWith(<App />);
+	} catch (err) {
+		document.getElementById('app')!.replaceWith(document.createTextNode(String(err)));
+	}
 });
