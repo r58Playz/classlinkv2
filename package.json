@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ktibow/iconset-material-symbols": "^0.0.1720072912",
-    "@mercuryworkshop/epoxy-tls": "2.0.8-1",
+    "@mercuryworkshop/epoxy-tls": "2.0.9-1",
     "dreamland": "^0.0.24",
     "dreamland-router": "github:mercuryworkshop/dreamland-router#r58",
     "m3-dreamland": "github:mercuryworkshop/m3-dreamland",
@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "@iconify/types": "^2.0.0",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.4",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.5",
     "vite-plugin-static-copy": "^1.0.6"
   }
 }
