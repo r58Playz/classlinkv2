@@ -12,10 +12,9 @@ export default defineConfig({
 			]
 		})
 	],
-	server: {
-		headers: {
-			"Cross-Origin-Opener-Policy": "same-origin",
-			"Cross-Origin-Embedder-Policy": "credentialless",
+	build: {
+		rollupOptions: {
+			input: ["index.html", "404.html"],
 		}
-	}
+	},
 });
