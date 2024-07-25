@@ -22,7 +22,7 @@ importers:
         version: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948
       m3-dreamland:
         specifier: github:mercuryworkshop/m3-dreamland
-        version: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/f655c7a76d5cd1e00fa9c0c067dc176ed27e7ee0
+        version: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/2678f9e1dcd0f9d78d5200b39360f736b64f881f
       vite-plugin-dreamland:
         specifier: ^1.2.1
         version: 1.2.1
@@ -364,8 +364,8 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/f655c7a76d5cd1e00fa9c0c067dc176ed27e7ee0:
-    resolution: {tarball: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/f655c7a76d5cd1e00fa9c0c067dc176ed27e7ee0}
+  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/2678f9e1dcd0f9d78d5200b39360f736b64f881f:
+    resolution: {tarball: https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/2678f9e1dcd0f9d78d5200b39360f736b64f881f}
     version: 0.0.1
 
   merge2@1.4.1:
@@ -722,7 +722,7 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/f655c7a76d5cd1e00fa9c0c067dc176ed27e7ee0:
+  m3-dreamland@https://codeload.github.com/mercuryworkshop/m3-dreamland/tar.gz/2678f9e1dcd0f9d78d5200b39360f736b64f881f:
     dependencies:
       '@ktibow/iconset-material-symbols': 0.0.1717653083
       '@material/material-color-utilities': 0.3.0

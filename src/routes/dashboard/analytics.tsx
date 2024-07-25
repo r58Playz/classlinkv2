@@ -1,21 +1,33 @@
 import { fetchBearer } from "../../epoxy";
+import { Router } from "../../router";
 import Layout from "./layout";
 // @ts-ignore
 import { Card } from "m3-dreamland";
 
-export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRecords: any, apps: any, appRecords: any }> = function() {
+export const Analytics: Component<{}, { loaded: boolean, error: Error | undefined, logins: any[], loginRecords: any, apps: any, appRecords: any }> = function() {
 	this.loaded = false;
+	this.error = undefined;
 	this.logins = [];
 	this.loginRecords = { daily: {}, month: {}, weeks: {}, yearly: {} };
 	this.apps = [];
 	this.appRecords = [];
 
 	this.mount = async () => {
-		this.logins = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/logins?limit=10").then(r => r.json());
-		this.loginRecords = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/logins/records").then(r => r.json());
-		this.apps = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/apps?limit=10").then(r => r.json());
-		this.appRecords = await fetchBearer(`https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01`).then(r=>r.json());
-		this.loaded = true;
+		try {
+			const userData = await fetchBearer("https://nodeapi.classlink.com/v2/my/info").then(r => r.json());
+			if (typeof userData.status === "number") {
+				Router.route("/");
+				return;
+			}
+
+			this.logins = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/logins?limit=10").then(r => r.json());
+			this.loginRecords = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/logins/records").then(r => r.json());
+			this.apps = await fetchBearer("https://analytics-data.classlink.io/my/v1p0/apps?limit=10").then(r => r.json());
+			this.appRecords = await fetchBearer(`https://analytics-data.classlink.io/my/v1p0/apps/top?order=Count&sort=DESC&limit=5&startDate=0001-01-01`).then(r => r.json());
+			this.loaded = true;
+		} catch (error) {
+			this.error = error as Error;
+		}
 	};
 
 	this.css = `
@@ -28,7 +40,7 @@ export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRec
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)}>
+			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
 				<h1 class="m3-font-headline-medium">Analytics</h1>
 				<h2 class="m3-font-title-large">Logins</h2>
 				<div class="list">
@@ -68,6 +80,6 @@ export const Analytics: Component<{}, { loaded: boolean, logins: any[], loginRec
 					}))}
 				</div>
 			</Layout>
-		</div>
+		</div >
 	);
 }

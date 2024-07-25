@@ -1,6 +1,6 @@
 import type { IconifyIcon } from "@iconify/types";
 // @ts-ignore
-import { NavList, NavListButton, LinearProgressIndeterminate } from "m3-dreamland";
+import { NavList, NavListButton, LinearProgressIndeterminate, Card } from "m3-dreamland";
 
 import iconHome from "@ktibow/iconset-material-symbols/home";
 import iconHomeOutline from "@ktibow/iconset-material-symbols/home-outline";
@@ -12,7 +12,10 @@ import iconSettings from "@ktibow/iconset-material-symbols/settings";
 import iconSettingsOutline from "@ktibow/iconset-material-symbols/settings-outline";
 import { Router } from "../../router";
 
-const Layout: Component<{ "bind:loading"?: DLPointer<boolean>, loading?: boolean }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[] }> = function() {
+const Layout: Component<{ loading?: boolean, error?: Error }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[], displayError: boolean, displayLoading: boolean, displayChildren: boolean }> = function() {
+	this.displayError = false;
+	this.displayLoading = false;
+	this.displayChildren = false;
 	const cssClass = css`
 		display: flex;
 		min-height: 100vh;
@@ -27,18 +30,30 @@ const Layout: Component<{ "bind:loading"?: DLPointer<boolean>, loading?: boolean
 
 		.DashboardLayout-content {
 			padding: 1rem;
+			min-width: 0;
 		}
 
-		.DashboardLayout-content:has(.DashboardLayout-loading) {
+		.DashboardLayout-content:has(.DashboardLayout-loading),
+		.DashboardLayout-content:has(.DashboardLayout-error) {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 		}
 
-		.DashboardLayout-loading {
+		.DashboardLayout-loading,
+		.DashboardLayout-error {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+		}
+
+		.DashboardLayout-error {
+			min-width: 0;
+		}
+		.DashboardLayout-error pre {
+			white-space: pre-wrap;
+			word-break: break-all;
+			overflow-wrap: anywhere;
 		}
 
 		@media (width < 37.5rem) {
@@ -108,6 +123,23 @@ const Layout: Component<{ "bind:loading"?: DLPointer<boolean>, loading?: boolean
 
 	// @ts-ignore
 	this._leak = true;
+
+	useChange([this.error, this.loading], () => {
+		if (this.error) {
+			this.displayChildren = false;
+			this.displayLoading = false;
+			this.displayError = true;
+			console.log(this.error);
+		} else if (this.loading) {
+			this.displayChildren = false;
+			this.displayLoading = true;
+			this.displayError = false;
+		} else {
+			this.displayChildren = true;
+			this.displayLoading = false;
+			this.displayError = false;
+		}
+	});
 	return (
 		<div class={cssClass}>
 			<div class="DashboardLayout-navbar">
@@ -128,7 +160,21 @@ const Layout: Component<{ "bind:loading"?: DLPointer<boolean>, loading?: boolean
 				</NavList>
 			</div>
 			<div class="DashboardLayout-content">
-				{$if(use(this.loading), <div class="DashboardLayout-loading">Fetching data<LinearProgressIndeterminate /></div>, <div>{this.children}</div>)}
+				{$if(use(this.displayError),
+					<div class="DashboardLayout-error">
+						<Card type="filled">
+							<pre>
+								{use(this.error)}
+							</pre>
+						</Card>
+					</div>
+				)}
+				{$if(use(this.displayLoading),
+					<div class="DashboardLayout-loading">Fetching data<LinearProgressIndeterminate /></div>
+				)}
+				{$if(use(this.displayChildren),
+					<div>{this.children}</div>
+				)}
 			</div>
 		</div >
 	)

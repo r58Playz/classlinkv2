@@ -32,6 +32,7 @@ window.addEventListener('load', () => {
 	try {
 		document.getElementById('app')!.replaceWith(<App />);
 	} catch (err) {
-		document.getElementById('app')!.replaceWith(document.createTextNode(String(err)));
+		document.getElementById('app')!.replaceWith(document.createTextNode("Error while rendering (this is usually because of an old browser): " + err));
+		console.error(err);
 	}
 });

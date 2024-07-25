@@ -12,17 +12,24 @@ let certs: any;
 let currentClient;
 let currentWispUrl: string;
 
+async function evictEpoxy() {
+	if (!cache) cache = await window.caches.open("classlinkv2-epoxy");
+	await cache.delete(EPOXY_PATH);
+	await cache.delete(CERTS_PATH);
+}
+
 async function instantiateEpoxy() {
 	if (!cache) cache = await window.caches.open("classlinkv2-epoxy");
 	if (!await cache.match(EPOXY_PATH)) {
 		await cache.add(EPOXY_PATH);
 	}
 	const module = await cache.match(EPOXY_PATH);
+	await epoxy_wasm(module);
+
 	if (!await cache.match(CERTS_PATH)) {
 		await cache.add(CERTS_PATH);
 	}
 	certs = (new Function("\"use strict\";" + await cache.match(CERTS_PATH).then(r => r?.text()) + "return ROOTS;"))();
-	await epoxy_wasm(module);
 }
 
 export async function createEpoxy() {
@@ -38,7 +45,14 @@ export async function createEpoxy() {
 
 export async function fetch(url: string, options?: any, retried?: boolean) {
 	if (!certs) {
-		await instantiateEpoxy();
+		try {
+			await instantiateEpoxy();
+		} catch(err) {
+			console.log(err);
+			// update epoxy wasm if it errors due to an epoxy js update
+			await evictEpoxy();
+			await instantiateEpoxy();
+		}
 	}
 	if (currentWispUrl !== settings.wispServer) {
 		await createEpoxy();

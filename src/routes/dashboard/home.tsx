@@ -9,7 +9,7 @@ import iconStar from "@ktibow/iconset-material-symbols/star";
 import iconStarOutline from "@ktibow/iconset-material-symbols/star-outline";
 import iconError from "@ktibow/iconset-material-symbols/error";
 
-const AppTile: Component<{ app: any, starred: boolean }, { url: string | null}> = function() {
+const AppTile: Component<{ app: any, starred: boolean }, { url: string | null }> = function() {
 	this.css = `
 		.CardClickable-m3-container {
 			width: 100%;
@@ -81,8 +81,9 @@ const AppTile: Component<{ app: any, starred: boolean }, { url: string | null}> 
 	)
 }
 
-const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: any, unstarred: any, starred: any }> = function() {
+const Dashboard: Component<{}, { loaded: boolean, error: Error | undefined, userData: any, applications: any, unstarred: any, starred: any }> = function() {
 	this.loaded = false;
+	this.error = undefined;
 	this.applications = [];
 	this.unstarred = [];
 	this.starred = [];
@@ -105,26 +106,30 @@ const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: a
 	`;
 
 	this.mount = async () => {
-		const searchParams = new URLSearchParams(location.search);
-		if (searchParams.has("code")) {
-			const resp = await fetch(`https://applications.apis.classlink.com/exchangeCode?code=${searchParams.get("code")}&response_type=code`).then(r => r.json());
-			tokens.code = searchParams.get("code");
-			tokens.gws = resp.gwsToken;
-			tokens.token = resp.token;
-			history.replaceState(null, "", location.pathname);
-		} else if (searchParams.has("nofetch")) {
-			return;
-		}
+		try {
+			const searchParams = new URLSearchParams(location.search);
+			if (searchParams.has("code")) {
+				const resp = await fetch(`https://applications.apis.classlink.com/exchangeCode?code=${searchParams.get("code")}&response_type=code`).then(r => r.json());
+				tokens.code = searchParams.get("code");
+				tokens.gws = resp.gwsToken;
+				tokens.token = resp.token;
+				history.replaceState(null, "", location.pathname);
+			} else if (searchParams.has("nofetch")) {
+				return;
+			}
 
-		const userData = await fetchBearer("https://nodeapi.classlink.com/v2/my/info").then(r => r.json());
-		if (typeof userData.status === "number") {
-			Router.route("/");
-			return;
-		}
-		this.userData = userData;
-		this.applications = await fetchBearer("https://applications.apis.classlink.com/v1/v3/applications").then(r => r.json());
+			const userData = await fetchBearer("https://nodeapi.classlink.com/v2/my/info").then(r => r.json());
+			if (typeof userData.status === "number") {
+				Router.route("/");
+				return;
+			}
+			this.userData = userData;
+			this.applications = await fetchBearer("https://applications.apis.classlink.com/v1/v3/applications").then(r => r.json());
 
-		this.loaded = true;
+			this.loaded = true;
+		} catch (error) {
+			this.error = error as Error;
+		}
 	}
 
 	useChange([this.applications, settings.starredApps], () => {
@@ -134,7 +139,7 @@ const Dashboard: Component<{}, { loaded: boolean, userData: any, applications: a
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)}>
+			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
 				<div>
 					<h1 class="m3-font-headline-medium">Home</h1>
 					<div class="m3-font-title-medium">Logged in as {use(this.userData.DisplayName)} ({use(this.userData.Email)})</div>

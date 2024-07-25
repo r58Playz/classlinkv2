@@ -1,4 +1,5 @@
 import { fetchBearer, fetchGws } from "../../epoxy";
+import { Router } from "../../router";
 import Layout from "./layout";
 // @ts-ignore
 import { Card } from "m3-dreamland";
@@ -28,20 +29,31 @@ const ClassTile: Component<{ class: any }, {}> = function() {
 	);
 }
 
-export const Classes: Component<{}, { loaded: boolean, disabled: boolean, schoolyear: any, classes: any }> = function() {
+export const Classes: Component<{}, { loaded: boolean, error: Error | undefined, disabled: boolean, schoolyear: any, classes: any }> = function() {
 	this.loaded = false;
+	this.error = undefined;
 	this.disabled = false;
 	this.schoolyear = { startHour: 0, endHour: 0, weekend: "" };
 	this.classes = [];
 
 	this.mount = async () => {
-		const backpack = await fetchBearer("https://nodeapi.classlink.com/tenant/customization/backpack").then(r => r.json());
-		this.disabled = backpack.enableStudentbackpack !== "1";
+		try {
+			const userData = await fetchBearer("https://nodeapi.classlink.com/v2/my/info").then(r => r.json());
+			if (typeof userData.status === "number") {
+				Router.route("/");
+				return;
+			}
 
-		this.schoolyear = await fetchGws("https://analytics-data.classlink.io/teacherConsole/v1p0/schoolyear").then(r => r.json());
-		this.classes = await fetchBearer("https://myclasses.apis.classlink.com/v1/classes").then(r => r.json());
+			const backpack = await fetchBearer("https://nodeapi.classlink.com/tenant/customization/backpack").then(r => r.json());
+			this.disabled = backpack.enableStudentbackpack !== "1";
 
-		this.loaded = true;
+			this.schoolyear = await fetchGws("https://analytics-data.classlink.io/teacherConsole/v1p0/schoolyear").then(r => r.json());
+			this.classes = await fetchBearer("https://myclasses.apis.classlink.com/v1/classes").then(r => r.json());
+
+			this.loaded = true;
+		} catch (error) {
+			this.error = error as Error;
+		}
 	};
 
 	this.css = `
@@ -54,7 +66,7 @@ export const Classes: Component<{}, { loaded: boolean, disabled: boolean, school
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)}>
+			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
 				<h1 class="m3-font-headline-medium">Classes</h1>
 				{$if(use(this.disabled), <p class="disabled">Your admin has disabled viewing of classes data. The APIs are still accessible however.</p>)}
 				<p>
