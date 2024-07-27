@@ -3,10 +3,9 @@ import epoxy_wasm from "@mercuryworkshop/epoxy-tls/minimal-epoxy";
 import { settings, tokens } from "./store";
 
 const EPOXY_PATH = "/epoxy/epoxy.wasm";
-const CERTS_PATH = "/epoxy/certs.js";
 
 let cache: Cache;
-let certs: any;
+let initted: boolean = false;
 
 // @ts-ignore
 let currentClient;
@@ -15,7 +14,6 @@ let currentWispUrl: string;
 async function evictEpoxy() {
 	if (!cache) cache = await window.caches.open("classlinkv2-epoxy");
 	await cache.delete(EPOXY_PATH);
-	await cache.delete(CERTS_PATH);
 }
 
 async function instantiateEpoxy() {
@@ -25,11 +23,7 @@ async function instantiateEpoxy() {
 	}
 	const module = await cache.match(EPOXY_PATH);
 	await epoxy_wasm(module);
-
-	if (!await cache.match(CERTS_PATH)) {
-		await cache.add(CERTS_PATH);
-	}
-	certs = (new Function("\"use strict\";" + await cache.match(CERTS_PATH).then(r => r?.text()) + "return ROOTS;"))();
+	initted = true;
 }
 
 export async function createEpoxy() {
@@ -40,14 +34,14 @@ export async function createEpoxy() {
 
 	currentWispUrl = settings.wispServer;
 	// @ts-ignore
-	currentClient = new epoxy_wasm.EpoxyClient(settings.wispServer, certs, options);
+	currentClient = new epoxy_wasm.EpoxyClient(settings.wispServer, options);
 }
 
 export async function fetch(url: string, options?: any, retried?: boolean) {
-	if (!certs) {
+	if (!initted) {
 		try {
 			await instantiateEpoxy();
-		} catch(err) {
+		} catch (err) {
 			console.log(err);
 			// update epoxy wasm if it errors due to an epoxy js update
 			await evictEpoxy();
@@ -60,7 +54,7 @@ export async function fetch(url: string, options?: any, retried?: boolean) {
 	try {
 		// @ts-ignore
 		return await currentClient.fetch(url, options);
-	} catch(err) {
+	} catch (err) {
 		if (retried) {
 			throw err;
 		}
@@ -70,7 +64,7 @@ export async function fetch(url: string, options?: any, retried?: boolean) {
 			// retriable, some wisp-server-workers issue?
 			// @ts-ignore
 			await currentClient.replace_stream_provider();
-			await new Promise(r=>setTimeout(r, 500));
+			await new Promise(r => setTimeout(r, 500));
 			return await fetch(url, options, true);
 		}
 	}

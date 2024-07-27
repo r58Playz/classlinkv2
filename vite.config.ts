@@ -8,11 +8,11 @@ export default defineConfig({
 		viteStaticCopy({
 			targets: [
 				{ src: "node_modules/@mercuryworkshop/epoxy-tls/minimal/epoxy.wasm", dest: "epoxy" },
-				{ src: "node_modules/@mercuryworkshop/epoxy-tls/minimal/certs.js", dest: "epoxy" }
 			]
 		})
 	],
 	build: {
+		target: "es2015",
 		rollupOptions: {
 			input: ["index.html", "404.html"],
 		}

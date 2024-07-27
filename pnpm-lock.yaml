@@ -12,11 +12,11 @@ importers:
         specifier: ^0.0.1720072912
         version: 0.0.1720072912
       '@mercuryworkshop/epoxy-tls':
-        specifier: 2.0.9-1
-        version: 2.0.9-1
+        specifier: 2.1.0-1
+        version: 2.1.0-1
       dreamland:
-        specifier: ^0.0.24
-        version: 0.0.24
+        specifier: link:../dreamlandjs
+        version: link:../dreamlandjs
       dreamland-router:
         specifier: github:mercuryworkshop/dreamland-router#r58
         version: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948
@@ -192,8 +192,8 @@ packages:
   '@material/material-color-utilities@0.3.0':
     resolution: {integrity: sha512-ztmtTd6xwnuh2/xu+Vb01btgV8SQWYCaK56CkRK8gEkWe5TuDyBcYJ0wgkMRn+2VcE9KUmhvkz+N9GHrqw/C0g==}
 
-  '@mercuryworkshop/epoxy-tls@2.0.9-1':
-    resolution: {integrity: sha512-VYp29TirlxVDe4TWEtPPJyvIsgZdtkHLIsehJOjNFVhW6tK713mmt2q4tBHJJ5acfF1dEx63ZJt9zXrH4jxvPw==}
+  '@mercuryworkshop/epoxy-tls@2.1.0-1':
+    resolution: {integrity: sha512-vyC2xVEd3gUl00r3CxqVd7qOe0FrkZQT2l6EP0qohqzcwV6oDq27nAa/I/gceYl38lDiqatxEoKKO4okvNbKCw==}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -309,9 +309,6 @@ packages:
   dreamland-router@https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948:
     resolution: {tarball: https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948}
     version: 1.0.1
-
-  dreamland@0.0.24:
-    resolution: {integrity: sha512-yHRqSr5sfQhMZTiVAlRrXB3WmxjCfuCg4RZbnD4uaXekJvqagmhmjLervW1ke2Z0NyQTkrrDXHUgnwy9UySnNA==}
 
   esbuild@0.21.5:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
@@ -556,7 +553,7 @@ snapshots:
 
   '@material/material-color-utilities@0.3.0': {}
 
-  '@mercuryworkshop/epoxy-tls@2.0.9-1': {}
+  '@mercuryworkshop/epoxy-tls@2.1.0-1': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -644,8 +641,6 @@ snapshots:
       fsevents: 2.3.3
 
   dreamland-router@https://codeload.github.com/mercuryworkshop/dreamland-router/tar.gz/2e2f20e7199e1914f051cc83cb26c1b43c7bf948: {}
-
-  dreamland@0.0.24: {}
 
   esbuild@0.21.5:
     optionalDependencies:
