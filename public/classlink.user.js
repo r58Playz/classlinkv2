@@ -2,16 +2,15 @@
 // @name Classlinkv2 Jump Script
 // @author r58Playz
 // @description Classlink jump script to intercept login
-// @include *classlink.r58playz.dev*
 // @include *myapps.classlink.com*
 // @include *launchpad.classlink.com*
 // @run-at document-end
 // @inject-into page
-// @version 2.0
+// @version 3.0
 // @grant none
 // ==/UserScript==
 const params = new URLSearchParams(location.search);
-const dev = true;
+const dev = false;
 if (
 	(location.hostname === "myapps.classlink.com" || location.hostname === "stagingmyapps.classlink.com")
 	&& location.pathname.includes("oauth")
