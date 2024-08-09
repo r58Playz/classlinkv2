@@ -34,14 +34,13 @@ const UblockJumpScript: Component<{}, {}> = function() {
 				<li>Click on the cog that appears.</li>
 				<li>Find <code>userResourcesLocation</code> and do either one of these:</li>
 				<ul>
-					<li>Remove <code>unset</code> and replace it with <code>https://classlink.r58playz.dev/userResources</code>.</li>
-					<li>Append <code>https://classlink.r58playz.dev/userResources</code> to the end of the existing URL list.</li>
+					<li>Remove <code>unset</code> and replace it with <code>https://classlink.r58playz.dev/classlink.user.js</code>.</li>
+					<li>Append <code>https://classlink.r58playz.dev/classlink.user.js</code> to the end of the existing URL list.</li>
 				</ul>
 				<li>Close the <code>Advanced settings</code> tab.</li>
 				<li>Click on <code>My filters</code>.</li>
 				<li>Add <code>myapps.classlink.com##+js(classlinkJumpScript.js)</code> to a new line.</li>
 				<li>Optionally add <code>launchpad.classlink.com##+js(classlinkJumpScript.js)</code> to a new line to enable Classlinkv2's Classlink LaunchPad extension emulation feature.</li>
-				<li>Add <code>classlink.r58playz.dev##+js(classlinkJumpScript.js)</code> to a new line.</li>
 				<li>Click <code>Apply changes</code>.</li>
 				<li>Reload this page.</li>
 			</ol>
