@@ -5,7 +5,11 @@ const Home: Component<{}, {}> = function() {
 		padding: 1em;
 
 		.warning {
-			color: rgb(var(--m3-scheme-error))
+			color: rgb(var(--m3-scheme-error));
+		}
+		
+		hr {
+			border-color: rgb(var(--m3-scheme-outline));
 		}
 	`;
 	return (
@@ -18,6 +22,10 @@ const Home: Component<{}, {}> = function() {
 				Classlinkv2 is built with the <a href="https://dreamland.js.org" target="_blank" rel="noopener noreferrer">dreamland.js</a> framework. It's lightweight (smaller than preact). Classlinkv2 also uses the <a href="https://github.com/MercuryWorkshop/m3-dreamland" target="_blank" rel="noopener noreferrer">m3-dreamland</a> UI component library which provides Material 3 components. To keep Classlink accounts safe, all API requests are performed end-to-end encrypted and on-browser through <a href="https://github.com/MercuryWorkshop/epoxy-tls" target="_blank" rel="noopener noreferrer">epoxy-tls</a>, which allows performing encrypted HTTP requests through a TCP proxy server that supports the <a href="https://github.com/MercuryWorkshop/wisp-protocol" target="_blank" rel="noopener noreferrer">Wisp protocol</a>.
 			</p>
 			<Login />
+			<hr />
+			<p>
+				Made by <a href="https://github.com/r58Playz" target="_blank" rel="noopener noreferrer">r58Playz</a>. Code is available on <a href="https://github.com/r58Playz/classlinkv2" target="_blank" rel="noopener noreferrer">GitHub</a>.
+			</p>
 		</div>
 	);
 };
