@@ -106,7 +106,7 @@ const SignInLoginStep: Component<{}, {}> = function() {
 	return (
 		<div>
 			<p>
-				Username and password login is not currently supported. You can manually go to your login page and log in from there instead if you log in with a username and password.
+				Make sure you are logged out of Classlink before logging in here. Username and password login is not currently supported. You can manually go to your login page and log in from there instead if you log in with a username and password.
 			</p>
 			<Card type="filled">
 				<div class="actions">
