@@ -42,7 +42,6 @@ const UblockJumpScript: Component<{}, {}> = function() {
 				<li>Add <code>myapps.classlink.com##+js(classlinkJumpScript.js)</code> to a new line.</li>
 				<li>Optionally add <code>launchpad.classlink.com##+js(classlinkJumpScript.js)</code> to a new line to enable Classlinkv2's Classlink LaunchPad extension emulation feature.</li>
 				<li>Click <code>Apply changes</code>.</li>
-				<li>Reload this page.</li>
 			</ol>
 		</p>
 	)
