@@ -52,8 +52,18 @@ export async function fetch(url: string, options?: any, retried?: boolean) {
 		await createEpoxy();
 	}
 	try {
+		let realOptions = options || {};
+		// try to fake a real browser
+		realOptions.headers = Object.assign(realOptions.headers || {}, {
+			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+			"Accept-Language": "en-US,en;q=0.9",
+			"Cache-Control": "no-cache",
+			"Dnt": "1",
+			"Pragma": "no-cache",
+			"Priority": "u=0, i",
+		});
 		// @ts-ignore
-		return await currentClient.fetch(url, options);
+		return await currentClient.fetch(url, realOptions);
 	} catch (err) {
 		if (retried) {
 			throw err;

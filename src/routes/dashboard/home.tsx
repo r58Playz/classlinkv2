@@ -81,11 +81,17 @@ const AppTile: Component<{ app: any, starred: boolean }, { url: string | null }>
 	)
 }
 
-const Dashboard: Component<{}, { loaded: boolean, error: Error | undefined, userData: any, applications: any, unstarred: any, starred: any }> = function() {
+const Dashboard: Component<{}, {
+	loaded: boolean,
+	error: Error | undefined,
+	userData: any,
+	applications: { folder_name: string, applications: any[] }[],
+	unstarred: { folder_name: string, applications: any[] }[],
+	starred: any
+}> = function() {
 	this.loaded = false;
 	this.error = undefined;
 	this.applications = [];
-	this.unstarred = [];
 	this.starred = [];
 
 	this.css = `
@@ -124,7 +130,10 @@ const Dashboard: Component<{}, { loaded: boolean, error: Error | undefined, user
 				return;
 			}
 			this.userData = userData;
-			this.applications = await fetchBearer("https://applications.apis.classlink.com/v1/v3/applications").then(r => r.json());
+			let apps = await fetchBearer("https://applications.apis.classlink.com/v1/v3/applications").then(r => r.json());
+			let folders = apps.filter((x: any) => !!x.apps).map((x: any) => { return { folder_name: `"${x.name}" Folder`, applications: x.apps } });
+			let rootfolder = apps.filter((x: any) => !x.apps);
+			this.applications = [...folders, { folder_name: "Applications", applications: rootfolder }];
 
 			this.loaded = true;
 		} catch (error) {
@@ -133,8 +142,11 @@ const Dashboard: Component<{}, { loaded: boolean, error: Error | undefined, user
 	}
 
 	useChange([this.applications, settings.starredApps], () => {
-		this.unstarred = this.applications.filter((x: any) => !settings.starredApps.includes(x.id));
-		this.starred = this.applications.filter((x: any) => settings.starredApps.includes(x.id));
+		this.starred = this.applications.flatMap(x => x.applications).filter((x: any) => settings.starredApps.includes(x.id));
+		this.unstarred = this.applications.map(x => {
+			x.applications = x.applications.filter((x: any) => !settings.starredApps.includes(x.id));
+			return x;
+		});
 	});
 
 	return (
@@ -149,12 +161,18 @@ const Dashboard: Component<{}, { loaded: boolean, error: Error | undefined, user
 							<div class="applications">
 								{use(this.starred, x => x.map((x: any) => { return <AppTile app={x} starred={true} /> }))}
 							</div>
-							<h2 class="m3-font-title-large">Applications</h2>
 						</div>
 					)}
-					<div class="applications">
-						{use(this.unstarred, x => x.map((x: any) => { return <AppTile app={x} starred={false} /> }))}
-					</div>
+					{use(this.unstarred, x => x.map(x => {
+						return (
+							<div>
+								<h2 class="m3-font-title-large">{x.folder_name}</h2>
+								<div class="applications">
+									{x.applications.map(x => <AppTile app={x} starred={false} />)}
+								</div>
+							</div>
+						)
+					}))}
 				</div>
 			</Layout>
 		</div>
