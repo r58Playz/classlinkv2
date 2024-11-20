@@ -1,5 +1,4 @@
 import { Router } from "../router";
-// @ts-ignore
 import { Card, Button } from "m3-dreamland";
 
 const Page404: Component<{}, {}> = function() {

@@ -1,5 +1,4 @@
 import { fetch, fetchBearer } from "../../epoxy";
-// @ts-ignore
 import { CardClickable, Button, Icon } from "m3-dreamland";
 import { settings, tokens } from "../../store";
 import Layout from "./layout";
@@ -64,7 +63,7 @@ const AppTile: Component<{ app: any, starred: boolean }, { url: string | null }>
 						{!this.url ? <div class="m3-font-label-medium unsupported"><Icon icon={iconError} />Unsupported</div> : null}
 					</div>
 					<div class="action">
-						<Button type="tonal" iconType="full" on:click={(e: Event) => {
+						<Button type="tonal" iconType="full" on:click={(e: PointerEvent) => {
 							e.stopPropagation();
 							if (this.starred) {
 								settings.starredApps = settings.starredApps.filter(x => x !== this.app.id);
@@ -144,14 +143,14 @@ const Dashboard: Component<{}, {
 	useChange([this.applications, settings.starredApps], () => {
 		this.starred = this.applications.flatMap(x => x.applications).filter((x: any) => settings.starredApps.includes(x.id));
 		this.unstarred = this.applications.map(x => {
-			x.applications = x.applications.filter((x: any) => !settings.starredApps.includes(x.id));
-			return x;
+			let applications = x.applications.filter((x: any) => !settings.starredApps.includes(x.id));
+			return { ...x, applications };
 		});
 	});
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
+			<Layout loading={use(this.loaded, x => !x)} error={use(this.error)}>
 				<div>
 					<h1 class="m3-font-headline-medium">Home</h1>
 					<div class="m3-font-title-medium">Logged in as {use(this.userData.DisplayName)} ({use(this.userData.Email)})</div>

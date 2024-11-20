@@ -1,5 +1,4 @@
 import type { IconifyIcon } from "@iconify/types";
-// @ts-ignore
 import { NavList, NavListButton, LinearProgressIndeterminate, Card } from "m3-dreamland";
 
 import iconHome from "@ktibow/iconset-material-symbols/home";
@@ -12,7 +11,20 @@ import iconSettings from "@ktibow/iconset-material-symbols/settings";
 import iconSettingsOutline from "@ktibow/iconset-material-symbols/settings-outline";
 import { Router } from "../../router";
 
-const Layout: Component<{ loading?: boolean, error?: Error }, { routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[], children: Element[], displayError: boolean, displayLoading: boolean, displayChildren: boolean }> = function() {
+const Layout: Component<{ 
+	loading?: boolean,
+	error?: Error
+}, { 
+	routes: { path: string, sicon: IconifyIcon, icon: IconifyIcon, label: string }[],
+
+	displayError: boolean,
+	displayLoading: boolean,
+	displayChildren: boolean
+
+	children: Element[],
+
+	_leak: true,
+}> = function() {
 	this.displayError = false;
 	this.displayLoading = false;
 	this.displayChildren = false;
@@ -121,7 +133,6 @@ const Layout: Component<{ loading?: boolean, error?: Error }, { routes: { path: 
 		}
 	];
 
-	// @ts-ignore
 	this._leak = true;
 
 	useChange([this.error, this.loading], () => {
@@ -148,6 +159,7 @@ const Layout: Component<{ loading?: boolean, error?: Error }, { routes: { path: 
 						{this.routes.map(x => {
 							return (
 								<NavListButton
+									type="auto"
 									icon={location.pathname === x.path ? x.sicon : x.icon}
 									selected={location.pathname === x.path}
 									on:click={() => Router.route(x.path)}

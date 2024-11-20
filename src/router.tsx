@@ -64,6 +64,6 @@ const routes: Route = {
 			show: Page404,
 		}
 	]
-}; 
+};
 
 export const Router = new DLRouter(routes);

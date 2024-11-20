@@ -1,5 +1,4 @@
 import { settings } from "../../store";
-// @ts-ignore
 import { Tabs, SegmentedButtonContainer, SegmentedButtonItem, Card, ButtonLink } from "m3-dreamland";
 
 import iconDns from "@ktibow/iconset-material-symbols/dns";
@@ -130,7 +129,7 @@ const Login: Component<{}, {}> = function() {
 			<p>
 				Go through each tab to set up Classlinkv2.
 			</p>
-			<Tabs primary={true} items={tabs} bind:tab={use(settings.lastLoginStep)} />
+			<Tabs items={tabs} bind:tab={use(settings.lastLoginStep)} />
 			{use(settings.lastLoginStep, x => (x === "wisp" ? <WispLoginStep /> : (x === "jump" ? <JumpScriptLoginStep /> : <SignInLoginStep />)))}
 		</div>
 	)

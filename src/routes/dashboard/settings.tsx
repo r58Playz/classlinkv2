@@ -1,10 +1,10 @@
 import iconLink from "@ktibow/iconset-material-symbols/link";
 import { fetch, createEpoxy } from "../../epoxy";
 import Layout from "./layout"
-// @ts-ignore
-import { TextField, Card, Button, argbFromHex, genScheme, sourceColorFromImage, hexFromArgb } from "m3-dreamland";
+import { TextField, Card, Button, sourceColorFromImage, hexFromArgb } from "m3-dreamland";
 import { settings } from "../../store";
 import { Router } from "../../router";
+import { schemes } from "../../main";
 
 const WispTestCard: Component<{}, { res: Response | undefined, body: string | undefined, error: string | undefined }> = function() {
 	// TODO: Snackbar that shows that cache was deleted/session was recreated
@@ -101,7 +101,7 @@ export const WispSettings: Component<{}, {}> = function() {
 			<p>
 				<TextField
 					bind:value={use(settings.wispServer)}
-					bind:error={use(settings.wispServer, x => !testUrl(x))}
+					error={use(settings.wispServer, x => !testUrl(x))}
 					name="Wisp Server URL"
 					leadingIcon={iconLink}
 				/>
@@ -119,30 +119,7 @@ export const WispSettings: Component<{}, {}> = function() {
 	)
 }
 
-const transformContrast = function(contrast: number): number {
-	return contrast == 0
-		? -0.5
-		: contrast == 1
-			? 0
-			: contrast == 2
-				? 6 / 12
-				: contrast == 3
-					? 8 / 12
-					: contrast == 4
-						? 10 / 12
-						: contrast == 5
-							? 11 / 12
-							: 1
-}
-
 export const MaterialSettings: Component<{}, { colorSelector: HTMLElement, fileSelector: HTMLInputElement }> = function() {
-	const schemes = ["tonal_spot", "content", "fidelity", "vibrant", "expressive", "neutral", "monochrome"];
-	useChange([settings.themeScheme, settings.themeColor, settings.themeContrast], () => {
-		const { light, dark } = genScheme(schemes[settings.themeScheme], transformContrast(settings.themeContrast), argbFromHex(settings.themeColor));
-		settings.lightTheme = light;
-		settings.darkTheme = dark;
-	});
-
 	this.css = `
 		.picker {
 			display: flex;

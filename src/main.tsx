@@ -1,11 +1,28 @@
 import 'dreamland/dev';
 import { Router } from './router';
 
-// @ts-ignore
-import { Styles } from 'm3-dreamland';
+import { StyleFromParams } from 'm3-dreamland';
 
 import './index.css';
 import { settings } from './store';
+
+
+export const schemes = ["tonal_spot", "content", "fidelity", "vibrant", "expressive", "neutral", "monochrome"] as const;
+const transformContrast = function(contrast: number): number {
+	return contrast == 0
+		? -0.5
+		: contrast == 1
+			? 0
+			: contrast == 2
+				? 6 / 12
+				: contrast == 3
+					? 8 / 12
+					: contrast == 4
+						? 10 / 12
+						: contrast == 5
+							? 11 / 12
+							: 1
+}
 
 const App: Component<
 	{
@@ -20,9 +37,11 @@ const App: Component<
 
 	return (
 		<div id="app">
-			<Styles
-				bind:light={use(settings.lightTheme)}
-				bind:dark={use(settings.darkTheme)} />
+			<StyleFromParams
+				scheme={use(settings.themeScheme, x => schemes[x])}
+				color={use(settings.themeColor)}
+				contrast={use(settings.themeContrast, transformContrast)}
+			/>
 			<div bind:this={use(this.renderRoot)} />
 		</div>
 	);

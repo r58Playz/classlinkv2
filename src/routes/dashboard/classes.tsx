@@ -1,7 +1,6 @@
 import { fetchBearer, fetchGws } from "../../epoxy";
 import { Router } from "../../router";
 import Layout from "./layout";
-// @ts-ignore
 import { Card } from "m3-dreamland";
 
 function formatWeekends(weekends: string): string {
@@ -29,7 +28,7 @@ const ClassTile: Component<{ class: any }, {}> = function() {
 	);
 }
 
-export const Classes: Component<{}, { loaded: boolean, error: Error | undefined, disabled: boolean, schoolyear: any, classes: any }> = function() {
+export const Classes: Component<{ loaded: boolean, error: Error | undefined, }, { disabled: boolean, schoolyear: any, classes: any }> = function() {
 	this.loaded = false;
 	this.error = undefined;
 	this.disabled = false;
@@ -66,7 +65,7 @@ export const Classes: Component<{}, { loaded: boolean, error: Error | undefined,
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
+			<Layout loading={use(this.loaded, x => !x)} error={use(this.error)}>
 				<h1 class="m3-font-headline-medium">Classes</h1>
 				{$if(use(this.disabled), <p class="disabled">Your admin has disabled viewing of classes data. The APIs are still accessible however.</p>)}
 				<p>

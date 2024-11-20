@@ -1,14 +1,14 @@
-// @ts-ignore
-import epoxy_wasm from "@mercuryworkshop/epoxy-tls/minimal-epoxy";
+import epoxyInit, { EpoxyClient, EpoxyClientOptions, info as epoxyInfo } from "@mercuryworkshop/epoxy-tls/minimal-epoxy";
 import { settings, tokens } from "./store";
+
+export let epoxyVersion = epoxyInfo.version;
 
 const EPOXY_PATH = "/epoxy/epoxy.wasm";
 
 let cache: Cache;
 let initted: boolean = false;
 
-// @ts-ignore
-let currentClient;
+let currentClient: EpoxyClient;
 let currentWispUrl: string;
 
 async function evictEpoxy() {
@@ -22,71 +22,56 @@ async function instantiateEpoxy() {
 		await cache.add(EPOXY_PATH);
 	}
 	const module = await cache.match(EPOXY_PATH);
-	await epoxy_wasm(module);
+	await epoxyInit({ module_or_path: module });
 	initted = true;
 }
 
 export async function createEpoxy() {
-	// @ts-ignore
-	let options = new epoxy_wasm.EpoxyClientOptions();
+	let options = new EpoxyClientOptions();
 	options.user_agent = navigator.userAgent;
 	options.udp_extension_required = false;
 
 	currentWispUrl = settings.wispServer;
-	// @ts-ignore
-	currentClient = new epoxy_wasm.EpoxyClient(settings.wispServer, options);
+	currentClient = new EpoxyClient(settings.wispServer, options);
 }
 
-export async function fetch(url: string, options?: any, retried?: boolean) {
+export async function fetch(url: string, options?: any): Promise<Response> {
 	if (!initted) {
-		try {
+		if (epoxyVersion === settings.epoxyVersion) {
 			await instantiateEpoxy();
-		} catch (err) {
-			console.log(err);
-			// update epoxy wasm if it errors due to an epoxy js update
+		} else {
 			await evictEpoxy();
 			await instantiateEpoxy();
 		}
 	}
+
 	if (currentWispUrl !== settings.wispServer) {
 		await createEpoxy();
 	}
 	try {
-		let realOptions = options || {};
-		// try to fake a real browser
-		realOptions.headers = Object.assign(realOptions.headers || {}, {
-			"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-			"Accept-Language": "en-US,en;q=0.9",
-			"Cache-Control": "no-cache",
-			"Dnt": "1",
-			"Pragma": "no-cache",
-			"Priority": "u=0, i",
-		});
-		// @ts-ignore
-		return await currentClient.fetch(url, realOptions);
-	} catch (err) {
-		if (retried) {
-			throw err;
-		}
+		return await currentClient.fetch(url, options);
+	} catch (err2) {
+		let err = err2 as Error;
 		console.log(err);
 
-		if ((err as Error).message.includes("UnexpectedEof")) {
-			// retriable, some wisp-server-workers issue?
-			// @ts-ignore
-			await currentClient.replace_stream_provider();
-			await new Promise(r => setTimeout(r, 500));
-			return await fetch(url, options, true);
+		if (err.message.includes("Wisp server closed: Throttled")) {
+			console.log("retrying, wisp-server-workers throttled us");
+			// wisp-server-workers thing, just clear all of the streams by reconnecting
+			currentClient.replace_stream_provider();
+			return await fetch(url, options);
 		}
+
+		throw err;
 	}
 }
 
-export async function fetchBearer(url: string, maybeOptions?: any) {
+export async function fetchBearer(url: string, maybeOptions?: any): Promise<Response> {
 	let options = maybeOptions || {};
 	options.headers = Object.assign(options.headers || {}, { "Authorization": "Bearer " + tokens.token });
 	return await fetch(url, options);
 }
 
-export async function fetchGws(url: string, maybeOptions?: any) {
+export async function fetchGws(url: string, maybeOptions?: any): Promise<Response> {
 	let options = maybeOptions || {};
 	options.headers = Object.assign(options.headers || {}, { "Authorization": "gws " + tokens.gws });
 	return await fetch(url, options);

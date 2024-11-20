@@ -1,25 +1,25 @@
 {
-  "name": "classlinkv2",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "tsc && vite build",
-    "dev": "vite",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@ktibow/iconset-material-symbols": "^0.0.1720072912",
-    "@mercuryworkshop/epoxy-tls": "2.1.0-1",
-    "dreamland": "github:mercuryworkshop/dreamlandjs",
-    "dreamland-router": "github:mercuryworkshop/dreamland-router#r58",
-    "m3-dreamland": "github:mercuryworkshop/m3-dreamland",
-    "vite-plugin-dreamland": "^1.2.1"
-  },
-  "devDependencies": {
-    "@iconify/types": "^2.0.0",
-    "typescript": "^5.5.4",
-    "vite": "^5.3.5",
-    "vite-plugin-static-copy": "^1.0.6"
-  }
+	"name": "classlinkv2",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "tsc && vite build",
+		"dev": "vite",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@ktibow/iconset-material-symbols": "^0.0.1731742403",
+		"@mercuryworkshop/epoxy-tls": "2.1.15-2",
+		"dreamland": "github:mercuryworkshop/dreamlandjs",
+		"dreamland-router": "github:mercuryworkshop/dreamland-router#r58",
+		"m3-dreamland": "github:mercuryworkshop/m3-dreamland",
+		"vite-plugin-dreamland": "^1.2.1"
+	},
+	"devDependencies": {
+		"@iconify/types": "^2.0.0",
+		"typescript": "^5.6.3",
+		"vite": "^5.4.11",
+		"vite-plugin-static-copy": "^2.1.0"
+	}
 }

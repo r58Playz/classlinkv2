@@ -1,10 +1,9 @@
 import { fetchBearer } from "../../epoxy";
 import { Router } from "../../router";
 import Layout from "./layout";
-// @ts-ignore
 import { Card } from "m3-dreamland";
 
-export const Analytics: Component<{}, { loaded: boolean, error: Error | undefined, logins: any[], loginRecords: any, apps: any, appRecords: any }> = function() {
+export const Analytics: Component<{ loaded: boolean, error: Error | undefined }, { logins: any[], loginRecords: any, apps: any, appRecords: any }> = function() {
 	this.loaded = false;
 	this.error = undefined;
 	this.logins = [];
@@ -40,7 +39,7 @@ export const Analytics: Component<{}, { loaded: boolean, error: Error | undefine
 
 	return (
 		<div>
-			<Layout bind:loading={use(this.loaded, x => !x)} bind:error={use(this.error)}>
+			<Layout loading={use(this.loaded, x => !x)} error={use(this.error)}>
 				<h1 class="m3-font-headline-medium">Analytics</h1>
 				<h2 class="m3-font-title-large">Logins</h2>
 				<div class="list">
